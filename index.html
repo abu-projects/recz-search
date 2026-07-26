@@ -1664,15 +1664,16 @@
 <body>
   <div class="page-shell">
     <header class="top-nav" aria-label="Primary navigation">
-      <a class="brand" href="LT.html" aria-label="RECZ home">
+      <a class="brand" href="index.html" aria-label="RECZ home">
         <img class="brand-logo" src="logo.svg" alt="RECZ Logo" />
         <span>RECZ</span>
       </a>
       <nav class="nav-links" aria-label="Main sections">
-        <a class="nav-link" href="LT.html">For You</a>
-        <a class="nav-link active" href="search.html" aria-current="page">Explore</a>
-        <a class="nav-link" href="1c.html">Circle</a>
-        <a class="nav-link" href="1c.html">Lists</a>
+        <a class="nav-link" href="index.html">For You</a>
+        <a class="nav-link active" href="index.html" aria-current="page">Explore</a>
+        <a class="nav-link" href="#">Circle</a>
+        <a class="nav-link" href="#">Lists</a>
+        <a class="nav-link" href="im-bored.html">I'm Bored</a>
       </nav>
       <div class="nav-actions">
         <a class="search-shortcut" href="#search" aria-label="Jump to search">
@@ -1709,10 +1710,10 @@
           <form class="search-wrap" id="search" aria-label="RECZ search">
             <label class="sr-only" for="searchInput">Search RECZ</label>
             <div class="search-composer">
-              <button class="import-trigger-btn" id="importTriggerBtn" type="button" aria-label="I'm bored - Import link or recommendation">
+              <a class="import-trigger-btn" id="importTriggerBtn" href="im-bored.html" aria-label="I'm bored - Activity suggestions">
                 <iconify-icon icon="tabler:mood-annoyed" width="22" height="22"></iconify-icon>
                 <span class="import-btn-text">I'm bored</span>
-              </button>
+              </a>
               <div class="composer-divider" aria-hidden="true"></div>
               <span class="search-icon" aria-hidden="true">
                 <iconify-icon icon="solar:magnifer-linear" width="26" height="26"></iconify-icon>
@@ -1964,13 +1965,11 @@
     searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const query = searchInput.value.trim();
-      if (!query) {
-        searchInput.focus();
-        statusNode.textContent = 'Enter a search query before submitting';
-        return;
+      if (query) {
+        window.location.href = `search-result.html?q=${encodeURIComponent(query)}`;
+      } else {
+        window.location.href = 'search-result.html';
       }
-      statusNode.textContent = `Searching RECZ for ${query}`;
-      window.location.href = `search-result.html?q=${encodeURIComponent(query)}`;
     });
 
     const themeToggle = document.getElementById('themeToggle');

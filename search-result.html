@@ -60,7 +60,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* Ambient Background Gradients & Grid Texture - Identical to search.html */
+    /* Ambient Background Gradients & Grid Texture - Identical to index.html */
     body::before,
     body::after {
       content: "";
@@ -98,7 +98,7 @@
       overflow-x: clip;
     }
 
-    /* TOP HEADER - Exact copy from search.html */
+    /* TOP HEADER - Exact copy from index.html */
     .top-nav {
       position: fixed;
       top: max(16px, env(safe-area-inset-top));
@@ -269,7 +269,7 @@
         linear-gradient(135deg, #3b202b, #111014 55%, #7f2446);
     }
 
-    /* SEARCH COMPOSER - Exact copy from search.html */
+    /* SEARCH COMPOSER - Exact copy from index.html */
     .search-wrap {
       width: 100%;
       position: relative;
@@ -590,23 +590,24 @@
     
     <!-- SHARED SEARCH HOME HEADER (100% Exact Copy) -->
     <header class="top-nav" aria-label="Primary navigation">
-      <a class="brand" href="search.html" aria-label="RECZ home">
+      <a class="brand" href="index.html" aria-label="RECZ home">
         <img class="brand-logo" src="logo.svg" alt="RECZ Logo" />
         <span>RECZ</span>
       </a>
       <nav class="nav-links" aria-label="Main sections">
-        <a class="nav-link" href="#">For You</a>
+        <a class="nav-link" href="index.html">For You</a>
         <a class="nav-link active" href="search-result.html" aria-current="page">Explore</a>
         <a class="nav-link" href="#">Circle</a>
         <a class="nav-link" href="#">Lists</a>
+        <a class="nav-link" href="im-bored.html">I'm Bored</a>
       </nav>
       <div class="nav-actions">
-        <a class="search-shortcut" href="#search-area" aria-label="Jump to search">
+        <a class="search-shortcut" href="index.html#search" aria-label="Jump to search">
           <iconify-icon icon="solar:magnifer-linear" width="19" height="19"></iconify-icon>
           <span>Search</span>
           <span class="shortcut-key">⌘ K</span>
         </a>
-        <a class="ask-rexy" href="#search-area">
+        <a class="ask-rexy" href="index.html#search">
           <span>Ask Rexy</span>
           <iconify-icon icon="solar:magic-stick-3-linear" width="18" height="18"></iconify-icon>
         </a>
@@ -628,10 +629,10 @@
       <section id="search-area" class="w-full flex flex-col gap-3">
         <form class="search-wrap" id="searchForm">
           <div class="search-composer">
-            <button class="import-trigger-btn" id="importTriggerBtn" type="button" aria-label="I'm bored - Import link or recommendation">
+            <a class="import-trigger-btn" id="importTriggerBtn" href="im-bored.html" aria-label="I'm bored - Activity suggestions">
               <iconify-icon icon="tabler:mood-annoyed" width="22" height="22"></iconify-icon>
               <span class="import-btn-text">I'm bored</span>
-            </button>
+            </a>
             <div class="composer-divider" aria-hidden="true"></div>
             <span class="search-icon" aria-hidden="true">
               <iconify-icon icon="solar:magnifer-linear" width="26" height="26"></iconify-icon>
@@ -1300,29 +1301,37 @@
     document.querySelectorAll('.why-result-btn, #showWhySummaryBtn').forEach(btn => {
       btn.addEventListener('click', () => {
         const venue = btn.getAttribute('data-venue') || 'Patio Kitchen';
-        whyTitle.textContent = `Why ${venue}?`;
-        whyModalOverlay.classList.remove('hidden');
-        whyModalOverlay.classList.add('flex');
+        if (whyTitle) whyTitle.textContent = `Why ${venue}?`;
+        if (whyModalOverlay) {
+          whyModalOverlay.classList.remove('hidden');
+          whyModalOverlay.classList.add('flex');
+        }
       });
     });
 
-    document.getElementById('closeWhyModal').addEventListener('click', () => {
-      whyModalOverlay.classList.add('hidden');
-      whyModalOverlay.classList.remove('flex');
+    document.getElementById('closeWhyModal')?.addEventListener('click', () => {
+      if (whyModalOverlay) {
+        whyModalOverlay.classList.add('hidden');
+        whyModalOverlay.classList.remove('flex');
+      }
     });
 
-    document.getElementById('gotItWhyBtn').addEventListener('click', () => {
-      whyModalOverlay.classList.add('hidden');
-      whyModalOverlay.classList.remove('flex');
+    document.getElementById('gotItWhyBtn')?.addEventListener('click', () => {
+      if (whyModalOverlay) {
+        whyModalOverlay.classList.add('hidden');
+        whyModalOverlay.classList.remove('flex');
+      }
     });
 
     // Conversational Followup
     function handleFollowup(text) {
       const tag = document.getElementById('refinementTag');
       const txt = document.getElementById('refinementText');
-      txt.textContent = text;
-      tag.classList.remove('hidden');
-      tag.classList.add('flex');
+      if (txt) txt.textContent = text;
+      if (tag) {
+        tag.classList.remove('hidden');
+        tag.classList.add('flex');
+      }
     }
 
     document.querySelectorAll('.followup-chip').forEach(btn => {
@@ -1331,14 +1340,29 @@
       });
     });
 
-    document.getElementById('followupForm').addEventListener('submit', (e) => {
+    document.getElementById('followupForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
       const input = document.getElementById('followupInput');
-      if (input.value.trim()) {
+      if (input && input.value.trim()) {
         handleFollowup(input.value.trim());
         input.value = '';
       }
     });
+
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchForm) {
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = searchInput ? searchInput.value.trim() : '';
+        if (query) {
+          window.location.href = `search-result.html?q=${encodeURIComponent(query)}`;
+        } else {
+          window.location.href = 'search-result.html';
+        }
+      });
+    }
   </script>
 </body>
 </html>

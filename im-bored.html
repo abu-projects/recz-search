@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="RECZ — I'm Bored Activity Suggestions Mode. Spontaneous recommendations based on your taste, location, and circle." />
+  <title>RECZ — I'm Bored Activity Suggestions</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23050505'/%3E%3Cpath d='M18 46V18h13.5c6.2 0 10.5 3.7 10.5 9.3 0 4-2.2 7-5.7 8.3L44 46h-8.3l-6.4-9.2h-4V46H18Zm7.3-15h5.3c2.6 0 4.1-1.3 4.1-3.5S33.2 24 30.6 24h-5.3v7Z' fill='%23ffffff'/%3E%3Cpath d='M18 46V18h5v28h-5Z' fill='%23f43f5e'/%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --font-sans: "Poppins", sans-serif;
+      --bg-canvas: #050505;
+      --bg-canvas-alt: #09080b;
+      --text-primary: #ffffff;
+      --text-secondary: #d4d4d8;
+      --text-tertiary: #a1a1aa;
+      --text-muted: #71717a;
+      --border-subtle: rgba(255, 255, 255, 0.05);
+      --border-strong: rgba(255, 255, 255, 0.10);
+      --surface-glass: rgba(255, 255, 255, 0.038);
+      --surface-glass-light: rgba(255, 255, 255, 0.055);
+      --surface-hover: rgba(255, 255, 255, 0.07);
+      --brand-rose: #f43f5e;
+      --brand-pink: #db2777;
+      --brand-purple: #a855f7;
+      --brand-gradient: linear-gradient(135deg, #f43f5e 0%, #db2777 100%);
+      --brand-text-gradient: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);
+      --shadow-color: rgba(0, 0, 0, 0.48);
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-3xl: 32px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-canvas);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Ambient Background Gradients & Grid Texture - Exact match to Search Home */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      z-index: 0;
+      background:
+        radial-gradient(circle at 12% 35%, rgba(244, 63, 94, 0.22), transparent 28%),
+        radial-gradient(circle at 88% 42%, rgba(168, 85, 247, 0.20), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(219, 39, 119, 0.10), transparent 32%),
+        linear-gradient(180deg, #050505 0%, #09080b 50%, #050505 100%);
+      filter: saturate(112%);
+    }
+
+    body::after {
+      z-index: 1;
+      opacity: 0.28;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.16) 0 1px, transparent 2px),
+        radial-gradient(circle at 76% 24%, rgba(255, 255, 255, 0.12) 0 1px, transparent 2px);
+      background-size: 112px 112px, 112px 112px, 360px 260px, 420px 320px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.58) 58%, rgba(0,0,0,0.1));
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 2;
+      min-height: 100dvh;
+      overflow-x: clip;
+    }
+
+    /* TOP NAV HEADER - Exact match to Search Home */
+    .top-nav {
+      position: fixed;
+      top: max(16px, env(safe-area-inset-top));
+      left: 24px;
+      right: 24px;
+      z-index: 10;
+      height: 72px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+      background: linear-gradient(180deg, rgba(5, 5, 5, 0.74), rgba(5, 5, 5, 0.34));
+      backdrop-filter: blur(28px) brightness(1.08) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) brightness(1.08) saturate(180%);
+    }
+
+    .brand {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary);
+      font-size: clamp(1.55rem, 1.7vw, 2rem);
+      line-height: 1;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      height: 36px;
+      width: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(244, 63, 94, 0.3));
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(24px, 3vw, 52px);
+    }
+
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.98rem;
+      line-height: 1.4rem;
+      font-weight: 400;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #ffffff;
+    }
+
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -14px;
+      height: 2px;
+      border-radius: var(--radius-pill);
+      background: var(--brand-gradient);
+    }
+
+    .nav-actions {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .search-shortcut,
+    .ask-rexy,
+    .icon-button,
+    .avatar-button {
+      min-height: 44px;
+      border: 1px solid var(--border-strong);
+      color: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(18px) brightness(1.08) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) brightness(1.08) saturate(180%);
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .search-shortcut {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .shortcut-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: rgba(255, 255, 255, 0.46);
+      font-size: 0.78rem;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .ask-rexy {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      border-color: rgba(244, 63, 94, 0.32);
+      border-radius: var(--radius-lg);
+      background: rgba(244, 63, 94, 0.12);
+      color: #fda4af;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .icon-button,
+    .avatar-button {
+      position: relative;
+      width: 44px;
+      border-radius: var(--radius-pill);
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      display: inline-grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-pill);
+      background: var(--brand-rose);
+      color: #fff;
+      font-size: 0.68rem;
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    .avatar-button {
+      overflow: hidden;
+      border-color: rgba(244, 63, 94, 0.46);
+      background:
+        radial-gradient(circle at 50% 22%, #f5d0d8 0 12%, transparent 13%),
+        radial-gradient(circle at 50% 48%, #b97478 0 16%, transparent 17%),
+        linear-gradient(135deg, #3b202b, #111014 55%, #7f2446);
+    }
+
+    /* LIQUID GLASS SURFACES */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.038);
+      backdrop-filter: blur(24px) brightness(1.05) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) brightness(1.05) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card-hover {
+      transition: transform 200ms ease, border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+    }
+    .glass-card-hover:hover {
+      transform: translateY(-2px);
+      border-color: rgba(244, 63, 94, 0.32);
+      background: rgba(255, 255, 255, 0.055);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    /* MOOD CHIPS */
+    .mood-chip {
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.032);
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+    .mood-chip:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .mood-chip.active {
+      color: #ffffff;
+      background: rgba(244, 63, 94, 0.18);
+      border-color: rgba(244, 63, 94, 0.45);
+      box-shadow: 0 0 20px rgba(244, 63, 94, 0.25);
+      font-weight: 600;
+    }
+
+    /* CATEGORY STICKY BAR TABS */
+    .category-tab {
+      position: relative;
+      padding: 10px 18px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 180ms ease;
+    }
+    .category-tab:hover {
+      color: #ffffff;
+    }
+    .category-tab.active {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .category-tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 14px;
+      right: 14px;
+      height: 2.5px;
+      border-radius: 999px;
+      background: var(--brand-gradient);
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.6);
+    }
+
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* PLAN DRAWER */
+    .plan-drawer {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 40;
+      width: min(92%, 640px);
+      transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .plan-drawer.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* MODAL OVERLAYS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(5, 5, 5, 0.82);
+      backdrop-filter: blur(28px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+
+    <!-- SHARED SEARCH TOP HEADER (Exact Match) -->
+    <header class="top-nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="RECZ home">
+        <img class="brand-logo" src="logo.svg" alt="RECZ Logo" />
+        <span>RECZ</span>
+      </a>
+      <nav class="nav-links" aria-label="Main sections">
+        <a class="nav-link" href="index.html">For You</a>
+        <a class="nav-link" href="index.html">Explore</a>
+        <a class="nav-link" href="#">Circle</a>
+        <a class="nav-link" href="#">Lists</a>
+        <a class="nav-link active" href="im-bored.html" aria-current="page">I'm Bored</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="search-shortcut" href="index.html#search" aria-label="Jump to search">
+          <iconify-icon icon="solar:magnifer-linear" width="19" height="19"></iconify-icon>
+          <span>Search</span>
+          <span class="shortcut-key">⌘ K</span>
+        </a>
+        <a class="ask-rexy" href="index.html#search">
+          <span>Ask Rexy</span>
+          <iconify-icon icon="solar:magic-stick-3-linear" width="18" height="18"></iconify-icon>
+        </a>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle light and dark mode" title="Toggle Light/Dark Mode">
+          <iconify-icon icon="solar:sun-2-linear" width="22" height="22" id="themeIcon"></iconify-icon>
+        </button>
+        <button class="icon-button" type="button" aria-label="Notifications">
+          <iconify-icon icon="solar:bell-linear" width="22" height="22"></iconify-icon>
+          <span class="badge">3</span>
+        </button>
+        <button class="avatar-button" type="button" aria-label="Open profile"></button>
+      </div>
+    </header>
+
+    <!-- MAIN CENTERED CONTAINER (Full-Width, Max 1280px, NO SIDEBARS!) -->
+    <main class="pt-28 pb-24 px-4 md:px-12 lg:px-16 max-w-[1280px] mx-auto w-full flex flex-col gap-8">
+
+      <!-- PAGE HERO (Spontaneous Mode) -->
+      <section class="flex flex-col items-center text-center gap-4 pt-4 pb-2 relative">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-rose-500/15 border border-rose-500/30 text-rose-300 shadow-sm">
+          <iconify-icon icon="tabler:mood-annoyed" width="16" class="text-rose-400"></iconify-icon>
+          <span>SPONTANEOUS MODE</span>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
+          What are you in the mood for?
+        </h1>
+
+        <p class="text-sm md:text-base text-zinc-300 max-w-xl font-normal leading-relaxed">
+          Pick a vibe, or let Rexy surprise you with something worth doing right now.
+        </p>
+
+        <!-- Small Context Line -->
+        <div class="flex items-center gap-2 text-xs text-zinc-400 font-medium pt-1">
+          <span class="flex items-center gap-1 text-rose-400">
+            <iconify-icon icon="solar:calendar-minimalistic-linear" width="14"></iconify-icon> Sunday evening
+          </span>
+          <span>•</span>
+          <span class="flex items-center gap-1 text-emerald-400">
+            <iconify-icon icon="solar:map-point-linear" width="14"></iconify-icon> Near you
+          </span>
+          <span>•</span>
+          <span class="text-zinc-300">Based on your taste graph</span>
+        </div>
+
+        <!-- HERO ACTIONS (Surprise Me & Refresh Ideas) -->
+        <div class="flex items-center gap-3 pt-3">
+          <button id="surpriseMeBtn" class="px-6 py-3.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold text-sm shadow-xl shadow-rose-500/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+            <iconify-icon icon="solar:stars-minimalistic-bold" width="18"></iconify-icon>
+            <span>Surprise me</span>
+          </button>
+
+          <button id="refreshIdeasBtn" class="px-5 py-3.5 rounded-full glass-panel hover:bg-white/10 text-zinc-200 font-medium text-sm transition-all flex items-center gap-2 border border-white/10">
+            <iconify-icon icon="solar:restart-linear" width="16"></iconify-icon>
+            <span>Refresh ideas</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- QUICK MOOD SELECTOR -->
+      <section class="flex flex-col gap-2">
+        <span class="text-xs font-semibold uppercase tracking-wider text-zinc-400 px-1">Choose a Vibe</span>
+        <div class="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none" id="moodChipsContainer">
+          <button class="mood-chip active" data-mood="all">✨ All Vibes</button>
+          <button class="mood-chip" data-mood="chill">🧘 Chill</button>
+          <button class="mood-chip" data-mood="social">🗣️ Social</button>
+          <button class="mood-chip" data-mood="active">🏃 Active</button>
+          <button class="mood-chip" data-mood="creative">🎨 Creative</button>
+          <button class="mood-chip" data-mood="outdoors">🌲 Outdoors</button>
+          <button class="mood-chip" data-mood="food">🍕 Food</button>
+          <button class="mood-chip" data-mood="nightout">🍸 Night out</button>
+          <button class="mood-chip" data-mood="stayin">🛋️ Stay in</button>
+          <button class="mood-chip" data-mood="new">⚡ Something new</button>
+          <button class="mood-chip" data-mood="budget">💰 Low budget</button>
+        </div>
+      </section>
+
+      <!-- CONTEXT CONTROLS BAR -->
+      <section class="glass-panel p-4 rounded-3xl border border-white/10 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+        <div class="flex items-center gap-4 flex-wrap text-xs">
+          <!-- WHO CONTROL -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-zinc-400 font-medium flex items-center gap-1">
+              <iconify-icon icon="solar:users-group-two-rounded-linear" width="14" class="text-rose-400"></iconify-icon> Who:
+            </span>
+            <select id="whoSelect" class="bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-zinc-200 font-medium focus:outline-none cursor-pointer hover:bg-white/10">
+              <option value="me">Just me</option>
+              <option value="friend">With a friend</option>
+              <option value="date">Date</option>
+              <option value="group">Group</option>
+              <option value="family">Family</option>
+            </select>
+          </div>
+
+          <!-- TIME CONTROL -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-zinc-400 font-medium flex items-center gap-1">
+              <iconify-icon icon="solar:clock-circle-linear" width="14" class="text-emerald-400"></iconify-icon> Time:
+            </span>
+            <select id="timeSelect" class="bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-zinc-200 font-medium focus:outline-none cursor-pointer hover:bg-white/10">
+              <option value="now">Right now</option>
+              <option value="hour">Next hour</option>
+              <option value="evening">This evening</option>
+              <option value="tonight">Tonight</option>
+              <option value="weekend">This weekend</option>
+            </select>
+          </div>
+
+          <!-- BUDGET CONTROL -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-zinc-400 font-medium flex items-center gap-1">
+              <iconify-icon icon="solar:wallet-linear" width="14" class="text-amber-400"></iconify-icon> Budget:
+            </span>
+            <select id="budgetSelect" class="bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-zinc-200 font-medium focus:outline-none cursor-pointer hover:bg-white/10">
+              <option value="any">Any budget</option>
+              <option value="free">Free</option>
+              <option value="low">Low budget ($)</option>
+              <option value="mid">Mid ($$)</option>
+            </select>
+          </div>
+
+          <!-- DISTANCE CONTROL -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-zinc-400 font-medium flex items-center gap-1">
+              <iconify-icon icon="solar:map-point-linear" width="14" class="text-rose-400"></iconify-icon> Distance:
+            </span>
+            <select id="distanceSelect" class="bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-zinc-200 font-medium focus:outline-none cursor-pointer hover:bg-white/10">
+              <option value="nearby">Nearby (&lt; 2 mi)</option>
+              <option value="5mi">Up to 5 miles</option>
+              <option value="anywhere">Anywhere</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- LOCATION TOGGLE PERMISSION INDICATOR -->
+        <div class="flex items-center gap-2 text-xs text-zinc-400 border-l border-white/10 pl-4 py-0.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Location active</span>
+          <button id="toggleLocationBtn" class="text-rose-400 hover:underline ml-1">Change</button>
+        </div>
+      </section>
+
+      <!-- STICKY CATEGORY NAVIGATION BAR -->
+      <section class="sticky top-[88px] z-30 bg-[#050505]/90 backdrop-blur-xl border-b border-white/10 pb-1 pt-1 -mx-4 px-4 md:-mx-12 md:px-12 lg:-mx-16 lg:px-16">
+        <div class="flex items-center gap-1 overflow-x-auto scrollbar-none max-w-[1280px] mx-auto" role="tablist">
+          <a href="#top-picks" class="category-tab active" data-cat="foryou">For You</a>
+          <a href="#section-food" class="category-tab" data-cat="food">Food & Drinks</a>
+          <a href="#section-movies" class="category-tab" data-cat="movies">Movies & Shows</a>
+          <a href="#section-events" class="category-tab" data-cat="events">Events</a>
+          <a href="#section-outdoors" class="category-tab" data-cat="outdoors">Outdoors</a>
+          <a href="#section-travel" class="category-tab" data-cat="travel">Travel</a>
+          <a href="#section-shopping" class="category-tab" data-cat="shopping">Shopping</a>
+          <a href="#section-culture" class="category-tab" data-cat="culture">Culture</a>
+          <a href="#section-music" class="category-tab" data-cat="music">Music & Nightlife</a>
+          <a href="#section-wellness" class="category-tab" data-cat="wellness">Wellness</a>
+          <a href="#section-athome" class="category-tab" data-cat="athome">At Home</a>
+        </div>
+      </section>
+
+      <!-- SECTION 1: BEST IDEAS FOR RIGHT NOW -->
+      <section id="top-picks" class="flex flex-col gap-4 pt-2">
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-rose-500 shadow-md shadow-rose-500/50"></span>
+            <h2 class="text-xl md:text-2xl font-bold text-white tracking-tight">Best ideas for right now</h2>
+          </div>
+          <p class="text-xs md:text-sm text-zinc-400">Chosen using your taste, location, time, and trusted-circle activity.</p>
+        </div>
+
+        <!-- HIGHLIGHTED CARDS GRID (1 Large Primary Card + 2 Supporting Cards) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- PRIMARY FEATURED CARD (Sunset Walk & Coffee) -->
+          <article class="lg:col-span-7 glass-panel glass-card-hover p-6 rounded-3xl border border-rose-500/20 relative flex flex-col justify-between overflow-hidden group shadow-2xl">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-rose-500/10 rounded-full filter blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col gap-3 relative z-10">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/20 border border-rose-500/40 text-rose-300 flex items-center gap-1.5">
+                  <iconify-icon icon="solar:stars-minimalistic-bold" width="14"></iconify-icon> Best right now
+                </span>
+                <span class="text-xs text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">96% taste match</span>
+              </div>
+
+              <h3 class="text-2xl font-bold text-white group-hover:text-rose-300 transition-colors">
+                Sunset Walk & Specialty Coffee
+              </h3>
+              
+              <span class="text-xs font-medium text-rose-400 uppercase tracking-wider">Outdoors · Food</span>
+
+              <p class="text-sm text-zinc-300 leading-relaxed">
+                A quiet sunset route through the park followed by a cozy specialty coffee spot saved by 3 people in your trusted circle.
+              </p>
+
+              <!-- Social Proof -->
+              <div class="flex items-center gap-2 text-xs text-zinc-400 pt-1">
+                <div class="flex -space-x-1.5 shrink-0">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b]" />
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b]" />
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b]" />
+                </div>
+                <span>Saved by <strong class="text-zinc-200">Lina, Omar, and 1 other friend</strong></span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-6 border-t border-white/10 mt-4 relative z-10 flex-wrap gap-3">
+              <div class="flex items-center gap-3 text-xs text-zinc-300 font-medium">
+                <span class="flex items-center gap-1 text-zinc-300"><iconify-icon icon="solar:map-point-linear" class="text-rose-400" width="14"></iconify-icon> 10 min away</span>
+                <span>•</span>
+                <span class="flex items-center gap-1 text-zinc-300"><iconify-icon icon="solar:clock-circle-linear" class="text-emerald-400" width="14"></iconify-icon> 60–90 min</span>
+                <span>•</span>
+                <span class="text-amber-400 font-semibold">$ Low budget</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="add-plan-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:bg-white/10 text-zinc-200 flex items-center gap-1" data-id="1" data-title="Sunset Walk & Coffee">
+                  <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+                </button>
+                <button class="px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md">
+                  View idea
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- SUPPORTING CARD 1 (Indie Movie Nearby) -->
+          <article class="lg:col-span-5 glass-panel glass-card-hover p-6 rounded-3xl border border-white/10 relative flex flex-col justify-between group">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 border border-purple-500/40 text-purple-300">
+                  Starting soon
+                </span>
+                <span class="text-xs text-rose-400 font-semibold">92% taste match</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-white group-hover:text-rose-300 transition-colors">
+                Indie Film Screenings at Laemmle
+              </h3>
+
+              <span class="text-xs font-medium text-purple-400 uppercase tracking-wider">Movies & Cinema</span>
+
+              <p class="text-xs md:text-sm text-zinc-300 leading-relaxed">
+                A highly rated indie drama starting in 45 minutes at the vintage neighborhood theater.
+              </p>
+
+              <div class="flex items-center gap-2 text-xs text-zinc-400">
+                <iconify-icon icon="solar:videocamera-record-linear" class="text-purple-400" width="14"></iconify-icon>
+                <span>Starts at 7:30 PM • 1.8 miles</span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-white/10 mt-4">
+              <button class="add-plan-btn text-xs text-zinc-300 hover:text-white flex items-center gap-1" data-id="2" data-title="Indie Film at Laemmle">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/10 hover:bg-white/15 text-white">
+                View showtimes
+              </button>
+            </div>
+          </article>
+
+          <!-- SUPPORTING CARD 2 (Hidden Dessert Place) -->
+          <article class="lg:col-span-12 glass-panel glass-card-hover p-6 rounded-3xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="flex flex-col gap-2 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/20 border border-amber-500/40 text-amber-300">
+                  Hidden Gem
+                </span>
+                <span class="text-xs text-zinc-400 font-medium">Food & Desserts</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-white hover:text-rose-300 transition-colors">
+                Try a Hidden Midnight Dessert Bar
+              </h3>
+
+              <p class="text-xs md:text-sm text-zinc-300">
+                Small artisanal dessert spot with matcha tartes & warm pastries, highly popular with similar taste profiles.
+              </p>
+
+              <div class="flex items-center gap-3 text-xs text-zinc-400">
+                <span class="text-emerald-400 font-medium">Open until 12 AM</span>
+                <span>•</span>
+                <span>0.9 miles away</span>
+                <span>•</span>
+                <span class="text-rose-400 font-medium">4 trusted signals</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0">
+              <button class="add-plan-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:bg-white/10 text-zinc-200 flex items-center gap-1" data-id="3" data-title="Hidden Midnight Dessert Bar">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md">
+                Get Directions
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- REXY PICKED THIS FOR YOU (Full-Width Highlight Panel) -->
+      <section class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/30 relative overflow-hidden bg-gradient-to-r from-rose-950/30 via-purple-950/20 to-zinc-950/40 shadow-2xl flex flex-col gap-4">
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white text-xs shadow-md shadow-rose-500/40">
+            <iconify-icon icon="solar:stars-minimalistic-bold" width="16"></iconify-icon>
+          </span>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-300">Rexy picked this for you</span>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h3 class="text-xl md:text-2xl font-bold text-white">
+            "Go for a sunset walk at Griffith Overlook, then try the specialty matcha café saved by Lina and Omar."
+          </h3>
+          <p class="text-xs md:text-sm text-zinc-300 leading-relaxed max-w-3xl">
+            It matches your preference for low-noise outdoor spots, it’s 12 minutes away, and the weather is clear for the next two hours.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3 pt-2 flex-wrap">
+          <button class="px-5 py-2.5 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30">
+            Do this now
+          </button>
+          <button id="showAnotherRexyBtn" class="px-4 py-2.5 rounded-full text-xs font-medium bg-white/10 hover:bg-white/15 text-zinc-200">
+            Show another
+          </button>
+          <button class="px-4 py-2.5 rounded-full text-xs font-medium bg-white/5 hover:bg-white/10 text-zinc-300 flex items-center gap-1.5">
+            <iconify-icon icon="solar:share-linear" width="14"></iconify-icon> Invite someone
+          </button>
+          <button id="whyRexyIdeaBtn" class="text-xs text-rose-400 hover:text-rose-300 font-medium underline px-2">
+            Why this idea?
+          </button>
+        </div>
+      </section>
+
+      <!-- CATEGORY 1: FOOD & DRINKS -->
+      <section id="section-food" class="flex flex-col gap-4 pt-4">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <div>
+            <h2 class="text-xl font-bold text-white tracking-tight">Grab something good</h2>
+            <p class="text-xs text-zinc-400">Cafés, quiet dinners, dessert spots, and rooftops.</p>
+          </div>
+          <span class="text-xs text-rose-400 font-medium cursor-pointer hover:underline">See all food</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          <!-- Food Card 1 -->
+          <article class="glass-panel glass-card-hover p-5 rounded-3xl border border-white/10 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="relative w-full h-36 rounded-2xl overflow-hidden mb-1">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 right-2.5 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Open now</span>
+              </div>
+              <h3 class="font-bold text-white text-base">Quiet Garden Bistro</h3>
+              <p class="text-xs text-zinc-300 line-clamp-2">Low-noise outdoor patio with artisanal sourdough & seasonal small plates.</p>
+              <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                <span>$$ • 0.8 mi</span>
+                <span>•</span>
+                <span class="text-rose-400 font-medium">Quiet vibe</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/10">
+              <button class="add-plan-btn text-xs text-zinc-400 hover:text-white flex items-center gap-1" data-id="f1" data-title="Quiet Garden Bistro">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-white">View</button>
+            </div>
+          </article>
+
+          <!-- Food Card 2 -->
+          <article class="glass-panel glass-card-hover p-5 rounded-3xl border border-white/10 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="relative w-full h-36 rounded-2xl overflow-hidden mb-1">
+                <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Trusted pick</span>
+              </div>
+              <h3 class="font-bold text-white text-base">Late-Night Handroll Bar</h3>
+              <p class="text-xs text-zinc-300 line-clamp-2">Fresh warm sushi handrolls served at a intimate 12-seat wooden counter.</p>
+              <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                <span>$$ • 1.2 mi</span>
+                <span>•</span>
+                <span class="text-rose-400 font-medium">2 friends saved</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/10">
+              <button class="add-plan-btn text-xs text-zinc-400 hover:text-white flex items-center gap-1" data-id="f2" data-title="Late-Night Handroll Bar">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-white">View</button>
+            </div>
+          </article>
+
+          <!-- Food Card 3 -->
+          <article class="glass-panel glass-card-hover p-5 rounded-3xl border border-white/10 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="relative w-full h-36 rounded-2xl overflow-hidden mb-1">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 right-2.5 bg-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Date spot</span>
+              </div>
+              <h3 class="font-bold text-white text-base">Rooftop Sunset Lounge</h3>
+              <p class="text-xs text-zinc-300 line-clamp-2">Panoramic skyline views, acoustic music, and crafted botanical drinks.</p>
+              <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                <span>$$$ • 2.4 mi</span>
+                <span>•</span>
+                <span class="text-purple-400 font-medium">Romantic</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/10">
+              <button class="add-plan-btn text-xs text-zinc-400 hover:text-white flex items-center gap-1" data-id="f3" data-title="Rooftop Sunset Lounge">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-white">View</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CATEGORY 2: MOVIES & SHOWS -->
+      <section id="section-movies" class="flex flex-col gap-4 pt-4">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <div>
+            <h2 class="text-xl font-bold text-white tracking-tight">Watch something</h2>
+            <p class="text-xs text-zinc-400">Indie cinemas, nearby screenings, and streaming recommendations.</p>
+          </div>
+          <span class="text-xs text-purple-400 font-medium cursor-pointer hover:underline">See all movies</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <article class="glass-panel glass-card-hover p-5 rounded-3xl border border-white/10 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="relative w-full h-36 rounded-2xl overflow-hidden mb-1">
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 right-2.5 bg-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Cinema</span>
+              </div>
+              <h3 class="font-bold text-white text-base">Outdoor Rooftop Cinema</h3>
+              <p class="text-xs text-zinc-300 line-clamp-2">Classic 90s thriller screening under stars with deck chairs & headphones.</p>
+              <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                <span>Starts 8:00 PM • 1.5 mi</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/10">
+              <button class="add-plan-btn text-xs text-zinc-400 hover:text-white flex items-center gap-1" data-id="m1" data-title="Outdoor Rooftop Cinema">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-white">Tickets</button>
+            </div>
+          </article>
+
+          <article class="glass-panel glass-card-hover p-5 rounded-3xl border border-white/10 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="relative w-full h-36 rounded-2xl overflow-hidden mb-1">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">At home</span>
+              </div>
+              <h3 class="font-bold text-white text-base">Recommended Short Sci-Fi Series</h3>
+              <p class="text-xs text-zinc-300 line-clamp-2">4-episode mystery drama matching your high rating on Severance.</p>
+              <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                <span>2.5 hrs total • 95% taste match</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/10">
+              <button class="add-plan-btn text-xs text-zinc-400 hover:text-white flex items-center gap-1" data-id="m2" data-title="Recommended Sci-Fi Series">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-white">Watch</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORY 3: OUTDOORS -->
+      <section id="section-outdoors" class="flex flex-col gap-4 pt-4">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <div>
+            <h2 class="text-xl font-bold text-white tracking-tight">Get outside</h2>
+            <p class="text-xs text-zinc-400">Parks, sunset viewpoints, walking routes, and sea breezes.</p>
+          </div>
+          <span class="text-xs text-emerald-400 font-medium cursor-pointer hover:underline">See all outdoor activities</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <article class="glass-panel glass-card-hover p-5 rounded-3xl border border-white/10 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="relative w-full h-36 rounded-2xl overflow-hidden mb-1">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 right-2.5 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Weather ideal</span>
+              </div>
+              <h3 class="font-bold text-white text-base">Coastal Walk & Sea Breeze</h3>
+              <p class="text-xs text-zinc-300 line-clamp-2">2-mile paved walking path along the bluffs with panoramic ocean view points.</p>
+              <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                <span>Free • 15 min drive • 45 min duration</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/10">
+              <button class="add-plan-btn text-xs text-zinc-400 hover:text-white flex items-center gap-1" data-id="o1" data-title="Coastal Walk & Sea Breeze">
+                <iconify-icon icon="solar:add-circle-linear" width="14"></iconify-icon> Add to plan
+              </button>
+              <button class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-white">Route</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- MINI PLAN DRAWER -->
+    <div id="planDrawer" class="plan-drawer">
+      <div class="glass-panel p-4 rounded-3xl border border-rose-500/40 bg-[#0d0c10]/95 backdrop-blur-2xl shadow-2xl flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
+            <span id="planCount">0</span>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Mini Plan in Progress</h4>
+            <span id="planTitleList" class="text-xs text-zinc-400 truncate max-w-xs block">Select activities to combine into your Sunday plan</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="clearPlanBtn" class="px-3 py-1.5 rounded-full text-xs text-zinc-400 hover:text-white">Clear</button>
+          <button id="viewPlanBtn" class="px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md">
+            View & Invite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SURPRISE ME MODAL -->
+    <div id="surpriseModal" class="modal-overlay">
+      <div class="glass-panel max-w-md w-full rounded-3xl p-6 border border-rose-500/40 bg-[#0d0c10] flex flex-col gap-4 shadow-2xl relative text-center items-center">
+        <button id="closeSurpriseModal" class="absolute top-4 right-4 text-zinc-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center bg-white/5">
+          <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon>
+        </button>
+
+        <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white shadow-xl shadow-rose-500/40">
+          <iconify-icon icon="solar:stars-minimalistic-bold" width="32"></iconify-icon>
+        </div>
+
+        <h3 class="text-xl font-bold text-white">Rexy's Surprise Recommendation</h3>
+
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 text-left flex flex-col gap-2 w-full">
+          <span class="text-xs text-rose-400 font-semibold uppercase tracking-wider">Spontaneous Match • 98%</span>
+          <h4 class="font-bold text-white text-base">Sunset Overlook & Warm Matcha Tartes</h4>
+          <p class="text-xs text-zinc-300">Take a short 15-minute scenic drive to the west lookout, then head to the quiet dessert counter saved by 3 friends.</p>
+        </div>
+
+        <div class="flex items-center justify-center gap-3 w-full pt-1">
+          <button id="tryAnotherSurpriseBtn" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-zinc-200 font-medium text-xs">
+            Try another
+          </button>
+          <button class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold text-xs shadow-md">
+            Do this now
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INTERACTIVE SCRIPT -->
+  <script>
+    // Theme toggle
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeToggle && themeIcon) {
+      themeToggle.addEventListener('click', () => {
+        const cur = root.getAttribute('data-theme') || 'dark';
+        const next = cur === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        themeIcon.setAttribute('icon', next === 'dark' ? 'solar:sun-2-linear' : 'solar:moon-linear');
+      });
+    }
+
+    // Mood Chips Filtering
+    const moodChips = document.querySelectorAll('.mood-chip');
+    moodChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        moodChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+    // Category sticky bar tabs
+    const catTabs = document.querySelectorAll('.category-tab');
+    catTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        catTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    // Surprise Me Modal
+    const surpriseMeBtn = document.getElementById('surpriseMeBtn');
+    const surpriseModal = document.getElementById('surpriseModal');
+    const closeSurpriseModal = document.getElementById('closeSurpriseModal');
+    const tryAnotherSurpriseBtn = document.getElementById('tryAnotherSurpriseBtn');
+
+    surpriseMeBtn?.addEventListener('click', () => {
+      surpriseModal.classList.add('active');
+    });
+
+    closeSurpriseModal?.addEventListener('click', () => {
+      surpriseModal.classList.remove('active');
+    });
+
+    tryAnotherSurpriseBtn?.addEventListener('click', () => {
+      alert("Rexy loaded a new spontaneous idea: 'Local Art Exhibition & Speakeasy Cocktails'");
+    });
+
+    // Refresh Ideas
+    document.getElementById('refreshIdeasBtn')?.addEventListener('click', () => {
+      alert("Refreshed activity suggestions based on current time and taste graph!");
+    });
+
+    // Mini Plan Drawer state
+    const planDrawer = document.getElementById('planDrawer');
+    const planCount = document.getElementById('planCount');
+    const planTitleList = document.getElementById('planTitleList');
+    const clearPlanBtn = document.getElementById('clearPlanBtn');
+    const addPlanBtns = document.querySelectorAll('.add-plan-btn');
+
+    let selectedPlanItems = [];
+
+    addPlanBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const title = btn.getAttribute('data-title');
+        if (!selectedPlanItems.includes(title)) {
+          selectedPlanItems.push(title);
+        }
+        updatePlanDrawer();
+      });
+    });
+
+    function updatePlanDrawer() {
+      if (selectedPlanItems.length > 0) {
+        planDrawer.classList.add('active');
+        planCount.textContent = selectedPlanItems.length;
+        planTitleList.textContent = selectedPlanItems.join(' → ');
+      } else {
+        planDrawer.classList.remove('active');
+      }
+    }
+
+    clearPlanBtn?.addEventListener('click', () => {
+      selectedPlanItems = [];
+      updatePlanDrawer();
+    });
+  </script>
+</body>
+</html>
