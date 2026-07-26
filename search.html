@@ -1970,6 +1970,7 @@
         return;
       }
       statusNode.textContent = `Searching RECZ for ${query}`;
+      window.location.href = `search-result.html?q=${encodeURIComponent(query)}`;
     });
 
     const themeToggle = document.getElementById('themeToggle');

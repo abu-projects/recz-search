@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="RECZ Search Results Page — Seamless continuation of the Search Home design experience." />
+  <title>RECZ Search — Quiet dinner place near me</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23050505'/%3E%3Cpath d='M18 46V18h13.5c6.2 0 10.5 3.7 10.5 9.3 0 4-2.2 7-5.7 8.3L44 46h-8.3l-6.4-9.2h-4V46H18Zm7.3-15h5.3c2.6 0 4.1-1.3 4.1-3.5S33.2 24 30.6 24h-5.3v7Z' fill='%23ffffff'/%3E%3Cpath d='M18 46V18h5v28h-5Z' fill='%23f43f5e'/%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --font-sans: "Poppins", sans-serif;
+      --bg-canvas: #050505;
+      --bg-canvas-alt: #09080b;
+      --text-primary: #ffffff;
+      --text-secondary: #d4d4d8;
+      --text-tertiary: #a1a1aa;
+      --text-muted: #71717a;
+      --border-subtle: rgba(255, 255, 255, 0.05);
+      --border-strong: rgba(255, 255, 255, 0.10);
+      --surface-glass: rgba(255, 255, 255, 0.045);
+      --surface-glass-light: rgba(255, 255, 255, 0.035);
+      --surface-input: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.055);
+      --brand-rose: #f43f5e;
+      --brand-pink: #db2777;
+      --brand-purple: #a855f7;
+      --brand-gradient: linear-gradient(135deg, #f43f5e 0%, #db2777 100%);
+      --brand-text-gradient: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);
+      --shadow-color: rgba(0, 0, 0, 0.48);
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-3xl: 32px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-canvas);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Ambient Background Gradients & Grid Texture - Identical to search.html */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      z-index: 0;
+      background:
+        radial-gradient(circle at 12% 42%, rgba(244, 63, 94, 0.22), transparent 27%),
+        radial-gradient(circle at 88% 38%, rgba(168, 85, 247, 0.20), transparent 28%),
+        radial-gradient(circle at 54% 74%, rgba(219, 39, 119, 0.08), transparent 32%),
+        linear-gradient(180deg, #050505 0%, #09080b 50%, #050505 100%);
+      filter: saturate(112%);
+    }
+
+    body::after {
+      z-index: 1;
+      opacity: 0.28;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.16) 0 1px, transparent 2px),
+        radial-gradient(circle at 76% 24%, rgba(255, 255, 255, 0.12) 0 1px, transparent 2px);
+      background-size: 112px 112px, 112px 112px, 360px 260px, 420px 320px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.58) 58%, rgba(0,0,0,0.1));
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 2;
+      min-height: 100dvh;
+      overflow-x: clip;
+    }
+
+    /* TOP HEADER - Exact copy from search.html */
+    .top-nav {
+      position: fixed;
+      top: max(16px, env(safe-area-inset-top));
+      left: 24px;
+      right: 24px;
+      z-index: 10;
+      height: 72px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+      background: linear-gradient(180deg, rgba(5, 5, 5, 0.74), rgba(5, 5, 5, 0.34));
+      backdrop-filter: blur(28px) brightness(1.08) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) brightness(1.08) saturate(180%);
+    }
+
+    .brand {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary);
+      font-size: clamp(1.55rem, 1.7vw, 2rem);
+      line-height: 1;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      height: 36px;
+      width: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(244, 63, 94, 0.3));
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(24px, 3vw, 52px);
+    }
+
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.98rem;
+      line-height: 1.4rem;
+      font-weight: 400;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #ffffff;
+    }
+
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -14px;
+      height: 2px;
+      border-radius: var(--radius-pill);
+      background: var(--brand-gradient);
+    }
+
+    .nav-actions {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .search-shortcut,
+    .ask-rexy,
+    .icon-button,
+    .avatar-button {
+      min-height: 44px;
+      border: 1px solid var(--border-strong);
+      color: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(18px) brightness(1.08) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) brightness(1.08) saturate(180%);
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .search-shortcut {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .shortcut-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: rgba(255, 255, 255, 0.46);
+      font-size: 0.78rem;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .ask-rexy {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      border-color: rgba(244, 63, 94, 0.32);
+      border-radius: var(--radius-lg);
+      background: rgba(244, 63, 94, 0.12);
+      color: #fda4af;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .icon-button,
+    .avatar-button {
+      position: relative;
+      width: 44px;
+      border-radius: var(--radius-pill);
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      display: inline-grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-pill);
+      background: var(--brand-rose);
+      color: #fff;
+      font-size: 0.68rem;
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    .avatar-button {
+      overflow: hidden;
+      border-color: rgba(244, 63, 94, 0.46);
+      background:
+        radial-gradient(circle at 50% 22%, #f5d0d8 0 12%, transparent 13%),
+        radial-gradient(circle at 50% 48%, #b97478 0 16%, transparent 17%),
+        linear-gradient(135deg, #3b202b, #111014 55%, #7f2446);
+    }
+
+    /* SEARCH COMPOSER - Exact copy from search.html */
+    .search-wrap {
+      width: 100%;
+      position: relative;
+    }
+
+    .search-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.46), rgba(255, 255, 255, 0.16), rgba(219, 39, 119, 0.36));
+      opacity: 0.34;
+      filter: blur(0.2px);
+      pointer-events: none;
+    }
+
+    .search-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 12px 42px -18px;
+      z-index: -1;
+      border-radius: var(--radius-pill);
+      background: rgba(244, 63, 94, 0.22);
+      filter: blur(34px);
+      opacity: 0.42;
+      pointer-events: none;
+    }
+
+    .search-composer {
+      position: relative;
+      height: 84px;
+      display: grid;
+      grid-template-columns: auto 1px 32px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+      padding: 0 20px;
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      border-radius: var(--radius-pill);
+      background:
+        radial-gradient(circle at 12% 50%, rgba(244, 63, 94, 0.12), transparent 34%),
+        radial-gradient(circle at 86% 50%, rgba(219, 39, 119, 0.14), transparent 34%),
+        rgba(10, 9, 12, 0.68);
+      backdrop-filter: blur(28px) brightness(1.1) saturate(195%);
+      -webkit-backdrop-filter: blur(28px) brightness(1.1) saturate(195%);
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.46),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .import-trigger-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      height: 52px;
+      padding: 0 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.045);
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      white-space: nowrap;
+      cursor: pointer;
+      overflow: hidden;
+      backdrop-filter: blur(20px) brightness(1.08);
+      -webkit-backdrop-filter: blur(20px) brightness(1.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      flex-shrink: 0;
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+    }
+
+    /* Google AI Mode Orbiting Spectral Border & Outer Glow */
+    .import-trigger-btn::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: var(--radius-pill);
+      background: conic-gradient(
+        from var(--border-angle, 0deg) at 50% 50%,
+        #fb923c 0deg,
+        #f43f5e 35deg,
+        #db2777 70deg,
+        #a855f7 105deg,
+        #38bdf8 140deg,
+        transparent 210deg
+      );
+      filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms ease;
+      z-index: 1;
+    }
+
+    .import-trigger-btn::after {
+      content: "";
+      position: absolute;
+      inset: -1.5px;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: conic-gradient(
+        from var(--border-angle, 0deg) at 50% 50%,
+        #fb923c 0deg,
+        #f43f5e 35deg,
+        #db2777 70deg,
+        #a855f7 105deg,
+        #38bdf8 140deg,
+        transparent 210deg
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+      z-index: 2;
+    }
+
+    .import-trigger-btn:hover::before,
+    .import-trigger-btn:hover::after {
+      opacity: 1;
+    }
+
+    .import-trigger-btn > * {
+      position: relative;
+      z-index: 3;
+    }
+
+    .import-trigger-btn iconify-icon {
+      color: #fda4af;
+      transition: transform 180ms ease, color 180ms ease;
+    }
+
+    .import-trigger-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(244, 63, 94, 0.45);
+      color: #ffffff;
+      box-shadow: 0 6px 26px rgba(244, 63, 94, 0.32);
+    }
+
+    .import-trigger-btn:hover iconify-icon {
+      color: #ffffff;
+      transform: scale(1.12);
+    }
+
+    .import-trigger-btn:active {
+      transform: scale(0.98);
+    }
+
+    .composer-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .search-icon {
+      color: rgba(255, 255, 255, 0.82);
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .search-input {
+      min-width: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #fff;
+      font: 300 clamp(1.05rem, 1.45vw, 1.34rem) / 1.4 var(--font-sans);
+      caret-color: var(--brand-rose);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.52);
+    }
+
+    .composer-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .composer-icon {
+      width: 52px;
+      height: 52px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.032);
+      color: #fda4af;
+      cursor: pointer;
+      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    }
+
+    .submit-search {
+      width: 64px;
+      height: 64px;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      border-radius: var(--radius-pill);
+      background: var(--brand-gradient);
+      color: #fff;
+      box-shadow:
+        0 12px 34px rgba(244, 63, 94, 0.36),
+        0 0 34px rgba(219, 39, 119, 0.22);
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    /* LIQUID GLASS PANELS & CARDS */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.038);
+      backdrop-filter: blur(24px) brightness(1.05) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) brightness(1.05) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-panel-hover {
+      transition: border-color 200ms ease, background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    }
+
+    .glass-panel-hover:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.055);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Category Navigation Tabs */
+    .category-tab {
+      position: relative;
+      padding: 10px 18px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 180ms ease;
+    }
+    .category-tab:hover {
+      color: #ffffff;
+    }
+    .category-tab.active {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .category-tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 14px;
+      right: 14px;
+      height: 2.5px;
+      border-radius: 999px;
+      background: var(--brand-gradient);
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.6);
+    }
+
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Import Modal Styling - Preserved */
+    .import-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(5, 5, 5, 0.78);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+    .import-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .import-modal-container {
+      position: relative;
+      width: min(100%, 580px);
+      padding: 36px 32px 32px;
+      border-radius: var(--radius-3xl);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(13, 12, 16, 0.95);
+      backdrop-filter: blur(32px);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    
+    <!-- SHARED SEARCH HOME HEADER (100% Exact Copy) -->
+    <header class="top-nav" aria-label="Primary navigation">
+      <a class="brand" href="search.html" aria-label="RECZ home">
+        <img class="brand-logo" src="logo.svg" alt="RECZ Logo" />
+        <span>RECZ</span>
+      </a>
+      <nav class="nav-links" aria-label="Main sections">
+        <a class="nav-link" href="#">For You</a>
+        <a class="nav-link active" href="search-result.html" aria-current="page">Explore</a>
+        <a class="nav-link" href="#">Circle</a>
+        <a class="nav-link" href="#">Lists</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="search-shortcut" href="#search-area" aria-label="Jump to search">
+          <iconify-icon icon="solar:magnifer-linear" width="19" height="19"></iconify-icon>
+          <span>Search</span>
+          <span class="shortcut-key">⌘ K</span>
+        </a>
+        <a class="ask-rexy" href="#search-area">
+          <span>Ask Rexy</span>
+          <iconify-icon icon="solar:magic-stick-3-linear" width="18" height="18"></iconify-icon>
+        </a>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle light and dark mode" title="Toggle Light/Dark Mode">
+          <iconify-icon icon="solar:sun-2-linear" width="22" height="22" id="themeIcon"></iconify-icon>
+        </button>
+        <button class="icon-button" type="button" aria-label="Notifications">
+          <iconify-icon icon="solar:bell-linear" width="22" height="22"></iconify-icon>
+          <span class="badge">3</span>
+        </button>
+        <button class="avatar-button" type="button" aria-label="Open profile"></button>
+      </div>
+    </header>
+
+    <!-- MAIN CENTERED CONTENT CONTAINER (Full-Width, NO SIDEBARS!) -->
+    <main class="pt-28 pb-20 px-4 md:px-12 lg:px-16 max-w-[1280px] mx-auto w-full flex flex-col gap-6">
+      
+      <!-- SEARCH AREA (Shared Search Composer anchored under header) -->
+      <section id="search-area" class="w-full flex flex-col gap-3">
+        <form class="search-wrap" id="searchForm">
+          <div class="search-composer">
+            <button class="import-trigger-btn" id="importTriggerBtn" type="button" aria-label="I'm bored - Import link or recommendation">
+              <iconify-icon icon="tabler:mood-annoyed" width="22" height="22"></iconify-icon>
+              <span class="import-btn-text">I'm bored</span>
+            </button>
+            <div class="composer-divider" aria-hidden="true"></div>
+            <span class="search-icon" aria-hidden="true">
+              <iconify-icon icon="solar:magnifer-linear" width="26" height="26"></iconify-icon>
+            </span>
+            <input class="search-input" id="searchInput" type="search" value="Quiet dinner place near me" placeholder="Search places, people, or ask Rexy..." autocomplete="off" />
+            <div class="composer-actions">
+              <button class="composer-icon" type="button" aria-label="Voice search">
+                <iconify-icon icon="solar:microphone-linear" width="24" height="24"></iconify-icon>
+              </button>
+              <button class="composer-icon" type="button" aria-label="Location filters">
+                <iconify-icon icon="solar:map-point-linear" width="24" height="24"></iconify-icon>
+              </button>
+              <button class="submit-search" type="submit" aria-label="Submit search">
+                <iconify-icon icon="solar:arrow-right-linear" width="28" height="28"></iconify-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- LIGHTWEIGHT SEARCH CONTEXT ROW -->
+        <div id="searchContextRow" class="flex items-center gap-2 text-xs text-zinc-400 px-2 pt-1 overflow-x-auto scrollbar-none">
+          <span class="text-zinc-500 font-medium shrink-0 flex items-center gap-1">
+            <iconify-icon icon="solar:tuning-2-linear" width="14"></iconify-icon> Search context:
+          </span>
+          <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-200 font-medium">Quiet dinner place near me</span>
+          <span id="refinementTag" class="hidden items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 font-medium">
+            <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+            <span id="refinementText">Best for a date</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- RESULT CATEGORY TABS -->
+      <section class="border-b border-white/10 pb-1">
+        <div class="flex items-center gap-2 overflow-x-auto scrollbar-none" role="tablist">
+          <button class="category-tab active" role="tab" aria-selected="true" data-category="all">All</button>
+          <button class="category-tab" role="tab" aria-selected="false" data-category="places">Places</button>
+          <button class="category-tab" role="tab" aria-selected="false" data-category="people">People</button>
+          <button class="category-tab" role="tab" aria-selected="false" data-category="posts">Posts</button>
+          <button class="category-tab" role="tab" aria-selected="false" data-category="lists">Lists</button>
+          <button class="category-tab" role="tab" aria-selected="false" data-category="events">Events</button>
+        </div>
+      </section>
+
+      <!-- REXY SUMMARY (Full-width Liquid Glass Panel) -->
+      <section class="glass-panel p-6 rounded-3xl relative overflow-hidden border border-white/10 flex flex-col md:flex-row gap-6 items-start justify-between shadow-2xl">
+        <div class="flex flex-col gap-3 max-w-3xl">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white text-xs shadow-md shadow-rose-500/30">
+              <iconify-icon icon="solar:stars-minimalistic-bold" width="14"></iconify-icon>
+            </span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-rose-300">Rexy’s take</span>
+          </div>
+
+          <p id="rexyTakeText" class="text-sm md:text-base text-zinc-100 font-normal leading-relaxed">
+            <strong class="text-white font-semibold">Patio Kitchen</strong> is the strongest match for a quiet dinner nearby. It combines outdoor seating, low-noise ambience, and three trusted signals from people whose taste overlaps with yours.
+          </p>
+
+          <div id="rexyChips" class="flex flex-wrap gap-2 pt-1">
+            <span class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-zinc-300 flex items-center gap-1.5">
+              <iconify-icon icon="solar:volume-loud-linear" width="13" class="text-rose-400"></iconify-icon> Quiet atmosphere
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-zinc-300 flex items-center gap-1.5">
+              <iconify-icon icon="solar:map-point-linear" width="13" class="text-rose-400"></iconify-icon> 0.9 mi away
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5 font-medium">
+              <iconify-icon icon="solar:clock-circle-linear" width="13"></iconify-icon> Open now
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center gap-1.5 font-medium">
+              <iconify-icon icon="solar:users-group-two-rounded-bold" width="13"></iconify-icon> 3 trusted signals
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs bg-gradient-to-r from-rose-500/20 to-pink-500/20 border border-rose-500/40 text-white font-semibold">
+              92% taste match
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3 pt-2">
+            <button id="showWhySummaryBtn" class="text-xs font-medium text-rose-400 hover:text-rose-300 flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20">
+              <iconify-icon icon="solar:question-square-linear" width="14"></iconify-icon>
+              <span>Show why</span>
+            </button>
+            <button id="askFollowupSummaryBtn" class="text-xs font-medium text-zinc-300 hover:text-white flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10">
+              <iconify-icon icon="solar:chat-round-line-linear" width="14"></iconify-icon>
+              <span>Ask a follow-up</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="relative w-full md:w-40 h-28 rounded-2xl overflow-hidden shrink-0 group border border-white/10 shadow-lg">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80" alt="Patio Kitchen preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          <div class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
+            Best match
+          </div>
+        </div>
+      </section>
+
+      <!-- HORIZONTAL FILTER BAR -->
+      <section class="flex flex-col gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" role="toolbar">
+          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="near_me">
+            <iconify-icon icon="solar:map-point-linear" width="14" class="text-rose-400"></iconify-icon>
+            <span>Near me</span>
+          </button>
+          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="open_now">
+            <iconify-icon icon="solar:clock-circle-linear" width="14" class="text-emerald-400"></iconify-icon>
+            <span>Open now</span>
+          </button>
+          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="top_rated">
+            <iconify-icon icon="solar:star-linear" width="14" class="text-amber-400"></iconify-icon>
+            <span>Top rated</span>
+          </button>
+          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="trusted">
+            <iconify-icon icon="solar:shield-check-linear" width="14" class="text-rose-400"></iconify-icon>
+            <span>Trusted</span>
+          </button>
+
+          <div class="relative">
+            <select id="cuisineFilter" class="glass-panel appearance-none px-4 py-2 pr-8 rounded-full text-xs font-medium text-zinc-200 hover:bg-white/10 focus:outline-none cursor-pointer">
+              <option value="all">Cuisine: All</option>
+              <option value="American">New American</option>
+              <option value="Sushi">Sushi</option>
+              <option value="Mediterranean">Mediterranean</option>
+              <option value="Middle Eastern">Middle Eastern</option>
+            </select>
+            <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
+          </div>
+
+          <div class="relative">
+            <select id="priceFilter" class="glass-panel appearance-none px-4 py-2 pr-8 rounded-full text-xs font-medium text-zinc-200 hover:bg-white/10 focus:outline-none cursor-pointer">
+              <option value="all">Price: All</option>
+              <option value="$">$ (Under $20)</option>
+              <option value="$$">$$ ($20–$40)</option>
+              <option value="$$$">$$$ ($40–$80)</option>
+            </select>
+            <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
+          </div>
+
+          <button id="clearAllFiltersBtn" class="hidden text-xs text-rose-400 hover:text-rose-300 font-medium underline px-2 whitespace-nowrap">
+            Clear all
+          </button>
+        </div>
+
+        <!-- RESULTS METADATA ROW -->
+        <div class="flex items-center justify-between text-xs text-zinc-400 px-1">
+          <div class="flex items-center gap-2">
+            <span id="resultsCount" class="font-semibold text-white">12 results</span>
+            <span>·</span>
+            <span class="text-zinc-300">ranked for your taste</span>
+            <span class="text-zinc-500 hidden sm:inline">· Updated just now</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button id="mapToggleBtn" class="glass-panel hover:bg-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-1.5 text-xs text-zinc-200 border border-white/10 transition-colors">
+              <iconify-icon icon="solar:map-line-duotone" width="15" class="text-rose-400"></iconify-icon>
+              <span id="mapToggleText">Map view</span>
+            </button>
+
+            <div class="relative">
+              <select id="sortSelect" class="glass-panel appearance-none px-3.5 py-1.5 pr-7 rounded-full text-xs text-zinc-200 border border-white/10 focus:outline-none cursor-pointer">
+                <option value="best_match">Sort: Best match</option>
+                <option value="distance">Sort: Distance</option>
+                <option value="rating">Sort: Rating</option>
+                <option value="most_trusted">Sort: Most trusted</option>
+              </select>
+              <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEARCH RESULT CARDS LIST (Wide Liquid Glass Horizontal Cards) -->
+      <section id="resultsList" class="flex flex-col gap-4">
+        
+        <!-- CARD 1: Patio Kitchen -->
+        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="American" data-price="$$" data-rating="4.8" data-distance="0.9" data-trusted="3" data-open="true">
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            <!-- Domain Breadcrumb Line -->
+            <div class="flex items-center gap-2 text-xs text-zinc-400">
+              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
+              <span class="text-zinc-400 font-medium truncate">recz.com › places › patio-kitchen</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">92% taste match</span>
+            </div>
+
+            <!-- Title Link -->
+            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
+              Patio Kitchen — Quiet Outdoor Dinner & Seasonal Small Plates
+            </h3>
+
+            <!-- Metadata Line -->
+            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
+              <span class="text-amber-400 font-semibold flex items-center gap-1">
+                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.8
+              </span>
+              <span class="text-zinc-500">(320 reviews)</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">New American</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">$$</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">0.9 mi</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-emerald-400 font-medium">Open until 11 PM</span>
+            </div>
+
+            <!-- Description -->
+            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
+              Outdoor patio, small plates, and a low-noise atmosphere that works well for conversation. High recommendation overlap with your saved spots Bestia and Bacetti.
+            </p>
+
+            <!-- Social Signals & Why This Result -->
+            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
+              <div class="flex items-center gap-1.5 text-zinc-400">
+                <div class="flex -space-x-1.5 shrink-0">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                </div>
+                <span><strong class="text-zinc-200 font-medium">3 people you trust</strong> saved this spot</span>
+              </div>
+
+              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Patio Kitchen" data-match="92%" data-signals="3 trusted circle saves, 0.9 mi away, quiet outdoor vibe match">
+                Why this result?
+              </button>
+            </div>
+          </div>
+
+          <!-- Thumbnail Right -->
+          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80" alt="Patio Kitchen" class="w-full h-full object-cover" />
+            <span class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Best match</span>
+          </div>
+        </article>
+
+        <!-- CARD 2: Nori Handrolls -->
+        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Sushi" data-price="$$" data-rating="4.7" data-distance="1.4" data-trusted="2" data-open="true">
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            <div class="flex items-center gap-2 text-xs text-zinc-400">
+              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
+              <span class="text-zinc-400 font-medium truncate">recz.com › places › nori-handrolls</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">88% taste match</span>
+            </div>
+
+            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
+              Nori Handrolls — Calm Sushi Counter & Fresh Handrolls
+            </h3>
+
+            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
+              <span class="text-amber-400 font-semibold flex items-center gap-1">
+                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.7
+              </span>
+              <span class="text-zinc-500">(184 reviews)</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">Sushi</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">$$</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">1.4 mi</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-emerald-400 font-medium">Open now</span>
+            </div>
+
+            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
+              Quick handroll counter that stays calm during early dinner hours. Great option before a movie or casual evening outing.
+            </p>
+
+            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
+              <div class="flex items-center gap-1.5 text-zinc-400">
+                <div class="flex -space-x-1.5 shrink-0">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                </div>
+                <span><strong class="text-zinc-200 font-medium">2 people you trust</strong> saved this spot</span>
+              </div>
+
+              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Nori Handrolls" data-match="88%" data-signals="Saved by 2 friends, calm early hours, sushi craving match">
+                Why this result?
+              </button>
+            </div>
+          </div>
+
+          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
+            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=400&q=80" alt="Nori Handrolls" class="w-full h-full object-cover" />
+            <span class="absolute top-2.5 right-2.5 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Trusted pick</span>
+          </div>
+        </article>
+
+        <!-- CARD 3: Mizlala at the Park -->
+        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Mediterranean" data-price="$$" data-rating="4.8" data-distance="2.1" data-trusted="4" data-open="true">
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            <div class="flex items-center gap-2 text-xs text-zinc-400">
+              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
+              <span class="text-zinc-400 font-medium truncate">recz.com › places › mizlala-park</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">90% taste match</span>
+            </div>
+
+            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
+              Mizlala at the Park — Casual Mediterranean & Garden Dining
+            </h3>
+
+            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
+              <span class="text-amber-400 font-semibold flex items-center gap-1">
+                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.8
+              </span>
+              <span class="text-zinc-500">(412 reviews)</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">Mediterranean</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">$$</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">2.1 mi</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-emerald-400 font-medium">Open until 10 PM</span>
+            </div>
+
+            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
+              Relaxed outdoor dining with casual shared plates and a quieter evening crowd under parkside heat lamps.
+            </p>
+
+            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
+              <div class="flex items-center gap-1.5 text-zinc-400">
+                <div class="flex -space-x-1.5 shrink-0">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                </div>
+                <span><strong class="text-zinc-200 font-medium">4 people you trust</strong> saved this spot</span>
+              </div>
+
+              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Mizlala at the Park" data-match="90%" data-signals="Outdoor seating match, 4 trusted saves, quiet parkside atmosphere">
+                Why this result?
+              </button>
+            </div>
+          </div>
+
+          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" alt="Mizlala at the Park" class="w-full h-full object-cover" />
+            <span class="absolute top-2.5 right-2.5 bg-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Popular nearby</span>
+          </div>
+        </article>
+
+        <!-- CARD 4: Kismet Rotisserie -->
+        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Middle Eastern" data-price="$" data-rating="4.6" data-distance="1.8" data-trusted="3" data-open="true">
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            <div class="flex items-center gap-2 text-xs text-zinc-400">
+              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
+              <span class="text-zinc-400 font-medium truncate">recz.com › places › kismet-rotisserie</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">86% taste match</span>
+            </div>
+
+            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
+              Kismet Rotisserie — Cozy Neighborhood Chicken & Dips
+            </h3>
+
+            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
+              <span class="text-amber-400 font-semibold flex items-center gap-1">
+                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.6
+              </span>
+              <span class="text-zinc-500">(210 reviews)</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">Middle Eastern</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">$</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">1.8 mi</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-emerald-400 font-medium">Open now</span>
+            </div>
+
+            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
+              Bright, cozy neighborhood spot with wood-roasted chicken, fresh pita, and intimate patio seating.
+            </p>
+
+            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
+              <div class="flex items-center gap-1.5 text-zinc-400">
+                <div class="flex -space-x-1.5 shrink-0">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                </div>
+                <span><strong class="text-zinc-200 font-medium">3 people you trust</strong> saved this spot</span>
+              </div>
+
+              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Kismet Rotisserie" data-match="86%" data-signals="Budget friendly ($), cozy vibe match, 3 trusted saves">
+                Why this result?
+              </button>
+            </div>
+          </div>
+
+          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="Kismet Rotisserie" class="w-full h-full object-cover" />
+            <span class="absolute top-2.5 right-2.5 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Hidden gem</span>
+          </div>
+        </article>
+
+        <!-- CARD 5: Bavel Speakeasy -->
+        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Middle Eastern" data-price="$$$" data-rating="4.9" data-distance="2.4" data-trusted="5" data-open="true">
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            <div class="flex items-center gap-2 text-xs text-zinc-400">
+              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
+              <span class="text-zinc-400 font-medium truncate">recz.com › places › bavel-speakeasy</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">95% taste match</span>
+            </div>
+
+            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
+              Bavel Speakeasy & Lounge — Dimly Lit Romantic Dining & Cocktails
+            </h3>
+
+            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
+              <span class="text-amber-400 font-semibold flex items-center gap-1">
+                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.9
+              </span>
+              <span class="text-zinc-500">(580 reviews)</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">Middle Eastern & Cocktails</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">$$$</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-zinc-300">2.4 mi</span>
+              <span class="text-zinc-600">•</span>
+              <span class="text-emerald-400 font-medium">Open until 1 AM</span>
+            </div>
+
+            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
+              Dimly lit, romantic ambience with soft acoustic background music and private booths. Ideal for special quiet dinners.
+            </p>
+
+            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
+              <div class="flex items-center gap-1.5 text-zinc-400">
+                <div class="flex -space-x-1.5 shrink-0">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
+                </div>
+                <span><strong class="text-zinc-200 font-medium">5 people you trust</strong> saved this spot</span>
+              </div>
+
+              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Bavel Speakeasy" data-match="95%" data-signals="High rating (4.9), late night romantic quiet spot, 5 trusted saves">
+                Why this result?
+              </button>
+            </div>
+          </div>
+
+          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&q=80" alt="Bavel Speakeasy" class="w-full h-full object-cover" />
+            <span class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Best match</span>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- FOLLOW-UP SEARCH AT BOTTOM -->
+      <section class="mt-6 flex flex-col gap-3">
+        <!-- Suggested Follow-Up Action Chips -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs text-zinc-400 scrollbar-none">
+          <span class="text-rose-400 font-semibold text-[11px] shrink-0 flex items-center gap-1">
+            <iconify-icon icon="solar:stars-minimalistic-bold" width="13"></iconify-icon> Suggested refinements:
+          </span>
+          <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Which one is best for a date?">Which one is best for a date?</button>
+          <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Only show outdoor places">Only show outdoor places</button>
+          <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Remove sushi">Remove sushi</button>
+          <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Show cheaper options">Show cheaper options</button>
+        </div>
+
+        <!-- Follow-Up Search Composer Bar -->
+        <form id="followupForm" class="glass-panel p-3.5 rounded-3xl border border-white/15 shadow-2xl backdrop-blur-2xl bg-[#0a090c]/90 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-rose-500/25">
+            <iconify-icon icon="solar:stars-minimalistic-bold" width="20"></iconify-icon>
+          </div>
+
+          <input 
+            type="text" 
+            id="followupInput" 
+            placeholder="Refine this search or ask a follow-up..." 
+            class="flex-1 bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none" 
+          />
+
+          <button type="button" class="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-rose-400 hover:bg-white/5">
+            <iconify-icon icon="solar:microphone-linear" width="20"></iconify-icon>
+          </button>
+
+          <button type="submit" class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white hover:scale-105 transition-transform shrink-0 shadow-md shadow-rose-500/30">
+            <iconify-icon icon="solar:arrow-up-linear" width="20"></iconify-icon>
+          </button>
+        </form>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- WHY THIS RESULT MODAL -->
+  <div id="whyModalOverlay" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel max-w-md w-full rounded-3xl p-6 border border-white/15 bg-[#0d0c10] flex flex-col gap-4 shadow-2xl relative">
+      <button id="closeWhyModal" class="absolute top-4 right-4 text-zinc-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center bg-white/5">
+        <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+          <iconify-icon icon="solar:question-square-bold" width="22"></iconify-icon>
+        </div>
+        <div>
+          <h3 id="whyTitle" class="font-semibold text-white text-base">Why Patio Kitchen?</h3>
+          <span id="whyMatchBadge" class="text-xs text-rose-400 font-medium">92% Taste Match breakdown</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2.5 text-xs text-zinc-300">
+        <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/5">
+          <iconify-icon icon="solar:heart-bold" width="16" class="text-rose-400 mt-0.5 shrink-0"></iconify-icon>
+          <div>
+            <strong class="text-white block font-medium">Similarity to previous saves</strong>
+            <span>High match with your saved spots Bestia and Bacetti for low noise & seasonal small plates.</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/5">
+          <iconify-icon icon="solar:users-group-two-rounded-bold" width="16" class="text-rose-400 mt-0.5 shrink-0"></iconify-icon>
+          <div>
+            <strong class="text-white block font-medium">Trusted-circle activity</strong>
+            <span>Saved by 3 people in your trusted circle.</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="gotItWhyBtn" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-medium text-xs hover:opacity-90 transition-opacity">
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- IMPORT MODAL -->
+  <div class="import-modal-overlay" id="importModalOverlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="import-modal-container">
+      <button class="absolute top-4 right-4 text-zinc-400 hover:text-white" id="closeImportModal" type="button" aria-label="Close modal">
+        <iconify-icon icon="solar:close-circle-linear" width="24" height="24"></iconify-icon>
+      </button>
+
+      <div class="flex flex-col items-center text-center gap-3 mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-rose-500/20 to-pink-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400">
+          <iconify-icon icon="solar:link-minimalistic-bold" width="28" height="28"></iconify-icon>
+        </div>
+        <h2 class="text-xl font-bold text-white">I'm bored? Import anything</h2>
+        <p class="text-xs text-zinc-400 max-w-sm">Paste a link from your favorite platform and Rexy will organize it into your personalized Taste Graph.</p>
+      </div>
+
+      <form id="importModalForm" class="flex flex-col gap-4">
+        <div class="relative">
+          <iconify-icon icon="solar:link-linear" width="20" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"></iconify-icon>
+          <input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl pl-10 pr-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500" id="importUrlInput" placeholder="Paste Instagram, TikTok, Google Maps, YouTube, Reddit link..." required />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Supported platforms</span>
+          <div class="flex flex-wrap gap-2 text-zinc-400">
+            <span class="p-2 rounded-xl bg-white/5 border border-white/5 hover:text-white" title="Instagram"><iconify-icon icon="simple-icons:instagram" width="18"></iconify-icon></span>
+            <span class="p-2 rounded-xl bg-white/5 border border-white/5 hover:text-white" title="TikTok"><iconify-icon icon="simple-icons:tiktok" width="18"></iconify-icon></span>
+            <span class="p-2 rounded-xl bg-white/5 border border-white/5 hover:text-white" title="Google Maps"><iconify-icon icon="simple-icons:googlemaps" width="18"></iconify-icon></span>
+            <span class="p-2 rounded-xl bg-white/5 border border-white/5 hover:text-white" title="YouTube"><iconify-icon icon="simple-icons:youtube" width="18"></iconify-icon></span>
+            <span class="p-2 rounded-xl bg-white/5 border border-white/5 hover:text-white" title="Reddit"><iconify-icon icon="simple-icons:reddit" width="18"></iconify-icon></span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 mt-2">
+          <button class="px-4 py-2 rounded-xl text-xs font-medium text-zinc-400 hover:text-white" id="cancelImportModal" type="button">Cancel</button>
+          <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-medium text-xs hover:opacity-90 transition-opacity flex items-center gap-1.5" type="submit">
+            <span>Import Link</span>
+            <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SCRIPT -->
+  <script>
+    // Theme toggle
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeToggle && themeIcon) {
+      themeToggle.addEventListener('click', () => {
+        const cur = root.getAttribute('data-theme') || 'dark';
+        const next = cur === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        themeIcon.setAttribute('icon', next === 'dark' ? 'solar:sun-2-linear' : 'solar:moon-linear');
+      });
+    }
+
+    // Category Tabs
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    // Import Modal elements & interaction ("I'm bored" button)
+    const importTriggerBtn = document.getElementById('importTriggerBtn');
+    const importModalOverlay = document.getElementById('importModalOverlay');
+    const closeImportModal = document.getElementById('closeImportModal');
+    const cancelImportModal = document.getElementById('cancelImportModal');
+    const importModalForm = document.getElementById('importModalForm');
+    const importUrlInput = document.getElementById('importUrlInput');
+
+    function openModal() {
+      if (!importModalOverlay) return;
+      importModalOverlay.classList.add('active');
+      setTimeout(() => importUrlInput?.focus(), 100);
+    }
+
+    function closeModal() {
+      if (!importModalOverlay) return;
+      importModalOverlay.classList.remove('active');
+      if (importUrlInput) importUrlInput.value = '';
+    }
+
+    importTriggerBtn?.addEventListener('click', openModal);
+    closeImportModal?.addEventListener('click', closeModal);
+    cancelImportModal?.addEventListener('click', closeModal);
+
+    importModalOverlay?.addEventListener('click', (e) => {
+      if (e.target === importModalOverlay) closeModal();
+    });
+
+    importModalForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const value = importUrlInput.value.trim();
+      if (!value) return;
+      alert(`Imported recommendation: ${value}`);
+      closeModal();
+    });
+
+    if (importTriggerBtn) {
+      const updateMouseTrack = (e) => {
+        const rect = importTriggerBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI) - 90;
+
+        importTriggerBtn.style.setProperty('--mouse-x', `${x.toFixed(1)}px`);
+        importTriggerBtn.style.setProperty('--mouse-y', `${y.toFixed(1)}px`);
+        importTriggerBtn.style.setProperty('--border-angle', `${angle.toFixed(1)}deg`);
+      };
+
+      importTriggerBtn.addEventListener('mousemove', updateMouseTrack);
+      document.addEventListener('mousemove', (e) => {
+        if (!importTriggerBtn) return;
+        const rect = importTriggerBtn.getBoundingClientRect();
+        if (
+          e.clientX >= rect.left - 50 &&
+          e.clientX <= rect.right + 50 &&
+          e.clientY >= rect.top - 50 &&
+          e.clientY <= rect.bottom + 50
+        ) {
+          updateMouseTrack(e);
+        }
+      });
+    }
+
+    // Why Modal
+    const whyModalOverlay = document.getElementById('whyModalOverlay');
+    const whyTitle = document.getElementById('whyTitle');
+
+    document.querySelectorAll('.why-result-btn, #showWhySummaryBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const venue = btn.getAttribute('data-venue') || 'Patio Kitchen';
+        whyTitle.textContent = `Why ${venue}?`;
+        whyModalOverlay.classList.remove('hidden');
+        whyModalOverlay.classList.add('flex');
+      });
+    });
+
+    document.getElementById('closeWhyModal').addEventListener('click', () => {
+      whyModalOverlay.classList.add('hidden');
+      whyModalOverlay.classList.remove('flex');
+    });
+
+    document.getElementById('gotItWhyBtn').addEventListener('click', () => {
+      whyModalOverlay.classList.add('hidden');
+      whyModalOverlay.classList.remove('flex');
+    });
+
+    // Conversational Followup
+    function handleFollowup(text) {
+      const tag = document.getElementById('refinementTag');
+      const txt = document.getElementById('refinementText');
+      txt.textContent = text;
+      tag.classList.remove('hidden');
+      tag.classList.add('flex');
+    }
+
+    document.querySelectorAll('.followup-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        handleFollowup(btn.getAttribute('data-prompt'));
+      });
+    });
+
+    document.getElementById('followupForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('followupInput');
+      if (input.value.trim()) {
+        handleFollowup(input.value.trim());
+        input.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
