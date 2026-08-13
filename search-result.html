@@ -553,6 +553,189 @@
       box-shadow: 0 0 12px rgba(244, 63, 94, 0.6);
     }
 
+    /* Filter Chips (13A Mobile-to-Web aesthetic) */
+    .filter-chip-13a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.045);
+      color: rgba(255, 255, 255, 0.78);
+    }
+    .filter-chip-13a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+    .filter-chip-13a.active {
+      background: #ffffff;
+      color: #050505;
+      font-weight: 600;
+      border-color: #ffffff;
+      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.22);
+    }
+
+    html[data-theme="light"] .filter-chip-13a {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.045);
+      color: #475569;
+    }
+    html[data-theme="light"] .filter-chip-13a:hover {
+      background: rgba(0, 0, 0, 0.09);
+      color: #0f172a;
+    }
+    html[data-theme="light"] .filter-chip-13a.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.2);
+    }
+
+    /* 13A Recommendation Card Component */
+    .recz-card-13a {
+      position: relative;
+      border-radius: var(--radius-3xl);
+      background: rgba(255, 255, 255, 0.038);
+      backdrop-filter: blur(24px) brightness(1.05) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) brightness(1.05) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+    .recz-card-13a:hover {
+      transform: translateY(-4px);
+      border-color: rgba(244, 63, 94, 0.35);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 32px rgba(244, 63, 94, 0.15);
+    }
+    
+    .recz-card-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #121118;
+    }
+    .recz-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
+    .recz-card-13a:hover .recz-card-media img {
+      transform: scale(1.06);
+    }
+    .recz-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%);
+      pointer-events: none;
+    }
+
+    .badge-rank {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 10;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(10, 9, 12, 0.75);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-save-circle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 10;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: rgba(10, 9, 12, 0.75);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+    .btn-save-circle:hover {
+      transform: scale(1.1);
+      background: rgba(244, 63, 94, 0.25);
+      border-color: rgba(244, 63, 94, 0.45);
+      color: #fda4af;
+    }
+    .btn-save-circle.saved {
+      background: var(--brand-rose);
+      border-color: var(--brand-rose);
+      color: #ffffff;
+    }
+
+    .btn-ask-recs-fab {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: var(--brand-gradient);
+      color: #ffffff;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(244, 63, 94, 0.45);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .btn-ask-recs-fab:hover {
+      transform: scale(1.12) rotate(6deg);
+      box-shadow: 0 12px 32px rgba(244, 63, 94, 0.65);
+    }
+
+    .rating-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    html[data-theme="light"] .recz-card-13a {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
+    }
+    html[data-theme="light"] .recz-card-13a:hover {
+      border-color: rgba(244, 63, 94, 0.35);
+      box-shadow: 0 18px 48px rgba(244, 63, 94, 0.14);
+    }
+    html[data-theme="light"] .rating-badge-pill {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #0f172a;
+    }
+
     .scrollbar-none::-webkit-scrollbar {
       display: none;
     }
@@ -912,8 +1095,8 @@
       </div>
     </header>
 
-    <!-- MAIN CENTERED CONTENT CONTAINER (Full-Width, NO SIDEBARS!) -->
-    <main class="pt-28 pb-20 px-4 md:px-12 lg:px-16 max-w-[1280px] mx-auto w-full flex flex-col gap-6">
+    <!-- MAIN CENTERED CONTENT CONTAINER -->
+    <main class="pt-28 pb-20 px-4 md:px-12 lg:px-16 max-w-[1340px] mx-auto w-full flex flex-col gap-6">
       
       <!-- SEARCH AREA (Shared Search Composer anchored under header) -->
       <section id="search-area" class="w-full flex flex-col gap-3">
@@ -955,15 +1138,16 @@
         </div>
       </section>
 
-      <!-- RESULT CATEGORY TABS -->
-      <section class="border-b border-white/10 pb-1">
-        <div class="flex items-center gap-2 overflow-x-auto scrollbar-none" role="tablist">
-          <button class="category-tab active" role="tab" aria-selected="true" data-category="all">All</button>
-          <button class="category-tab" role="tab" aria-selected="false" data-category="places">Places</button>
-          <button class="category-tab" role="tab" aria-selected="false" data-category="people">People</button>
-          <button class="category-tab" role="tab" aria-selected="false" data-category="posts">Posts</button>
-          <button class="category-tab" role="tab" aria-selected="false" data-category="lists">Lists</button>
-          <button class="category-tab" role="tab" aria-selected="false" data-category="events">Events</button>
+      <!-- 13A FILTER CHIPS ROW (All, Food, Near, Open, Friends, etc.) -->
+      <section class="w-full pt-1">
+        <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none" role="tablist" id="filterChipsRow">
+          <button class="filter-chip-13a active" role="tab" aria-selected="true" data-category="all">All</button>
+          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="food">Food</button>
+          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="near">Near</button>
+          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="open">Open</button>
+          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="friends">Friends</button>
+          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="posts">Posts</button>
+          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="lists">Lists</button>
         </div>
       </section>
 
@@ -1011,7 +1195,7 @@
           </div>
         </div>
 
-        <div class="relative w-full md:w-40 h-28 rounded-2xl overflow-hidden shrink-0 group border border-white/10 shadow-lg">
+        <div class="relative w-full md:w-44 h-32 rounded-2xl overflow-hidden shrink-0 group border border-white/10 shadow-lg">
           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80" alt="Patio Kitchen preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
           <div class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
             Best match
@@ -1019,69 +1203,22 @@
         </div>
       </section>
 
-      <!-- HORIZONTAL FILTER BAR -->
+      <!-- RESULTS HEADER ROW (13A Style: "Top matches", count, Map button) -->
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" role="toolbar">
-          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="near_me">
-            <iconify-icon icon="solar:map-point-linear" width="14" class="text-rose-400"></iconify-icon>
-            <span>Near me</span>
-          </button>
-          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="open_now">
-            <iconify-icon icon="solar:clock-circle-linear" width="14" class="text-emerald-400"></iconify-icon>
-            <span>Open now</span>
-          </button>
-          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="top_rated">
-            <iconify-icon icon="solar:star-linear" width="14" class="text-amber-400"></iconify-icon>
-            <span>Top rated</span>
-          </button>
-          <button class="filter-chip glass-panel hover:bg-white/10 px-4 py-2 rounded-full text-xs font-medium text-zinc-200 whitespace-nowrap flex items-center gap-1.5 transition-all" data-filter="trusted">
-            <iconify-icon icon="solar:shield-check-linear" width="14" class="text-rose-400"></iconify-icon>
-            <span>Trusted</span>
-          </button>
-
-          <div class="relative">
-            <select id="cuisineFilter" class="glass-panel appearance-none px-4 py-2 pr-8 rounded-full text-xs font-medium text-zinc-200 hover:bg-white/10 focus:outline-none cursor-pointer">
-              <option value="all">Cuisine: All</option>
-              <option value="American">New American</option>
-              <option value="Sushi">Sushi</option>
-              <option value="Mediterranean">Mediterranean</option>
-              <option value="Middle Eastern">Middle Eastern</option>
-            </select>
-            <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
-          </div>
-
-          <div class="relative">
-            <select id="priceFilter" class="glass-panel appearance-none px-4 py-2 pr-8 rounded-full text-xs font-medium text-zinc-200 hover:bg-white/10 focus:outline-none cursor-pointer">
-              <option value="all">Price: All</option>
-              <option value="$">$ (Under $20)</option>
-              <option value="$$">$$ ($20–$40)</option>
-              <option value="$$$">$$$ ($40–$80)</option>
-            </select>
-            <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
-          </div>
-
-          <button id="clearAllFiltersBtn" class="hidden text-xs text-rose-400 hover:text-rose-300 font-medium underline px-2 whitespace-nowrap">
-            Clear all
-          </button>
-        </div>
-
-        <!-- RESULTS METADATA ROW -->
-        <div class="flex items-center justify-between text-xs text-zinc-400 px-1">
-          <div class="flex items-center gap-2">
-            <span id="resultsCount" class="font-semibold text-white">12 results</span>
-            <span>·</span>
-            <span class="text-zinc-300">ranked for your taste</span>
-            <span class="text-zinc-500 hidden sm:inline">· Updated just now</span>
+        <div class="flex items-center justify-between pt-1">
+          <div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Top matches</h2>
+            <p id="resultsCountSub" class="text-xs text-zinc-400 font-normal">12 results for quiet dinner</p>
           </div>
 
           <div class="flex items-center gap-3">
-            <button id="mapToggleBtn" class="glass-panel hover:bg-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-1.5 text-xs text-zinc-200 border border-white/10 transition-colors">
-              <iconify-icon icon="solar:map-line-duotone" width="15" class="text-rose-400"></iconify-icon>
-              <span id="mapToggleText">Map view</span>
+            <button id="mapToggleBtn" class="glass-panel hover:bg-white/10 px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-zinc-100 border border-white/12 transition-all shadow-sm">
+              <iconify-icon icon="solar:map-line-duotone" width="16" class="text-rose-400"></iconify-icon>
+              <span id="mapToggleText">Map</span>
             </button>
 
             <div class="relative">
-              <select id="sortSelect" class="glass-panel appearance-none px-3.5 py-1.5 pr-7 rounded-full text-xs text-zinc-200 border border-white/10 focus:outline-none cursor-pointer">
+              <select id="sortSelect" class="glass-panel appearance-none px-3.5 py-2 pr-7 rounded-full text-xs text-zinc-200 border border-white/10 focus:outline-none cursor-pointer">
                 <option value="best_match">Sort: Best match</option>
                 <option value="distance">Sort: Distance</option>
                 <option value="rating">Sort: Rating</option>
@@ -1091,282 +1228,508 @@
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- SEARCH RESULT CARDS LIST (Wide Liquid Glass Horizontal Cards) -->
-      <section id="resultsList" class="flex flex-col gap-4">
-        
-        <!-- CARD 1: Patio Kitchen -->
-        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="American" data-price="$$" data-rating="4.8" data-distance="0.9" data-trusted="3" data-open="true">
-          <div class="flex flex-col gap-2 flex-1 min-w-0">
-            <!-- Domain Breadcrumb Line -->
-            <div class="flex items-center gap-2 text-xs text-zinc-400">
-              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
-              <span class="text-zinc-400 font-medium truncate">recz.com › places › patio-kitchen</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">92% taste match</span>
-            </div>
-
-            <!-- Title Link -->
-            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
-              Patio Kitchen — Quiet Outdoor Dinner & Seasonal Small Plates
-            </h3>
-
-            <!-- Metadata Line -->
-            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
-              <span class="text-amber-400 font-semibold flex items-center gap-1">
-                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.8
+        <!-- INTERACTIVE MAP CONTAINER (Hidden by default, toggled via Map button) -->
+        <div id="mapViewContainer" class="hidden w-full h-[380px] rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl transition-all duration-300">
+          <div class="absolute inset-0 bg-[#0f0e13] flex flex-col justify-between p-6">
+            <div class="absolute inset-0 opacity-30 bg-[radial-gradient(#f43f5e_1.2px,transparent_1.2px)] [background-size:28px_28px]"></div>
+            
+            <!-- Map Pin Overlay Mock -->
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-xs text-white font-medium flex items-center gap-2">
+                <iconify-icon icon="solar:map-point-wave-bold" class="text-rose-400" width="16"></iconify-icon>
+                <span>Interactive Area View · West Hollywood</span>
               </span>
-              <span class="text-zinc-500">(320 reviews)</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">New American</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">$$</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">0.9 mi</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-emerald-400 font-medium">Open until 11 PM</span>
-            </div>
-
-            <!-- Description -->
-            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-              Outdoor patio, small plates, and a low-noise atmosphere that works well for conversation. High recommendation overlap with your saved spots Bestia and Bacetti.
-            </p>
-
-            <!-- Social Signals & Why This Result -->
-            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
-              <div class="flex items-center gap-1.5 text-zinc-400">
-                <div class="flex -space-x-1.5 shrink-0">
-                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                </div>
-                <span><strong class="text-zinc-200 font-medium">3 people you trust</strong> saved this spot</span>
-              </div>
-
-              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Patio Kitchen" data-match="92%" data-signals="3 trusted circle saves, 0.9 mi away, quiet outdoor vibe match">
-                Why this result?
+              <button id="closeMapBtn" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/15 hover:bg-white/20">
+                <iconify-icon icon="solar:close-circle-linear" width="18"></iconify-icon>
               </button>
             </div>
+
+            <div class="relative z-10 flex items-center justify-center gap-8 py-10">
+              <!-- Pin 1 -->
+              <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                <div class="px-3 py-1 rounded-full bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-500/40 group-hover:scale-110 transition-transform flex items-center gap-1">
+                  <iconify-icon icon="solar:star-bold" width="12"></iconify-icon> Patio Kitchen (4.8)
+                </div>
+                <div class="w-3 h-3 bg-rose-500 rotate-45 -mt-2 shadow-md"></div>
+              </div>
+
+              <!-- Pin 2 -->
+              <div class="flex flex-col items-center gap-1 group cursor-pointer opacity-90">
+                <div class="px-3 py-1 rounded-full bg-zinc-800 border border-white/20 text-white font-semibold text-xs shadow-lg group-hover:scale-110 transition-transform">
+                  Nori Handrolls (4.7)
+                </div>
+                <div class="w-2.5 h-2.5 bg-zinc-800 rotate-45 -mt-1.5"></div>
+              </div>
+
+              <!-- Pin 3 -->
+              <div class="flex flex-col items-center gap-1 group cursor-pointer opacity-90">
+                <div class="px-3 py-1 rounded-full bg-zinc-800 border border-white/20 text-white font-semibold text-xs shadow-lg group-hover:scale-110 transition-transform">
+                  Mizlala Park (4.8)
+                </div>
+                <div class="w-2.5 h-2.5 bg-zinc-800 rotate-45 -mt-1.5"></div>
+              </div>
+            </div>
+
+            <div class="relative z-10 flex items-center justify-between text-xs text-zinc-400">
+              <span>Showing 6 quiet spots near you</span>
+              <span class="text-rose-400 font-medium cursor-pointer hover:underline">Open full map view →</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEARCH RESULT CARDS GRID (Exact 13A Card Design Adapted for Web Desktop/Tablet) -->
+      <section id="resultsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- CARD 1: Patio Kitchen -->
+        <article class="recz-card-13a serp-item" data-category="food" data-cuisine="American" data-price="$$" data-rating="4.8" data-distance="0.9" data-trusted="3" data-open="true">
+          <div class="recz-card-media">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Patio Kitchen" />
+            <div class="recz-card-overlay"></div>
+            
+            <!-- Top Badges / Action Overlay -->
+            <span class="badge-rank flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+              #1 result
+            </span>
+
+            <button class="btn-save-circle save-card-btn" aria-label="Save Patio Kitchen" title="Save Patio Kitchen">
+              <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
+            </button>
+
+            <!-- Floating Action Button (13A Magic Recs button) -->
+            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Patio Kitchen" aria-label="Ask Recs for Patio Kitchen" title="Ask Rexy about Patio Kitchen">
+              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
+            </button>
           </div>
 
-          <!-- Thumbnail Right -->
-          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
-            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80" alt="Patio Kitchen" class="w-full h-full object-cover" />
-            <span class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Best match</span>
+          <!-- Card Content Body -->
+          <div class="p-5 flex flex-col justify-between gap-4 flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-xl font-bold text-white tracking-tight leading-snug hover:text-rose-400 cursor-pointer transition-colors">
+                  Patio Kitchen
+                </h3>
+                <span class="rating-badge-pill shrink-0">
+                  <iconify-icon icon="solar:star-bold" width="13" class="text-amber-400"></iconify-icon>
+                  <span>4.8</span>
+                </span>
+              </div>
+
+              <!-- Metadata Line (13A style) -->
+              <div class="flex items-center gap-1.5 text-xs text-zinc-300 font-medium flex-wrap">
+                <span>Dinner</span>
+                <span class="text-zinc-500">·</span>
+                <span>Foodie</span>
+                <span class="text-zinc-500">·</span>
+                <span>0.9 mi</span>
+                <span class="text-zinc-500">·</span>
+                <span class="text-emerald-400 font-semibold">Open now</span>
+              </div>
+
+              <!-- Description -->
+              <p class="text-xs text-zinc-300 leading-relaxed line-clamp-2 pt-0.5">
+                Patio. Small plates. Quiet enough for conversation. High recommendation overlap with Bestia and Bacetti.
+              </p>
+            </div>
+
+            <!-- Social Signals & Actions -->
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs text-zinc-400 gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <div class="flex -space-x-1.5 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                  </div>
+                  <span class="truncate"><strong class="text-zinc-200 font-medium">3 friends</strong> saved this</span>
+                </div>
+
+                <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium text-xs flex items-center gap-1 shrink-0" data-venue="Patio Kitchen" data-match="92%">
+                  <span>Why this?</span>
+                  <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+                </button>
+              </div>
+
+              <!-- Action Pills -->
+              <div class="flex items-center gap-2">
+                <button class="save-card-btn flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-zinc-200 flex items-center justify-center gap-1.5 transition-all">
+                  <iconify-icon icon="solar:bookmark-linear" width="14" class="text-rose-400"></iconify-icon>
+                  <span>Save</span>
+                </button>
+                <button class="ask-recs-btn flex-1 py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 flex items-center justify-center gap-1.5 transition-all" data-venue="Patio Kitchen">
+                  <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
+                  <span>Ask Recs</span>
+                </button>
+              </div>
+            </div>
           </div>
         </article>
 
         <!-- CARD 2: Nori Handrolls -->
-        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Sushi" data-price="$$" data-rating="4.7" data-distance="1.4" data-trusted="2" data-open="true">
-          <div class="flex flex-col gap-2 flex-1 min-w-0">
-            <div class="flex items-center gap-2 text-xs text-zinc-400">
-              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
-              <span class="text-zinc-400 font-medium truncate">recz.com › places › nori-handrolls</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">88% taste match</span>
-            </div>
+        <article class="recz-card-13a serp-item" data-category="food" data-cuisine="Sushi" data-price="$$" data-rating="4.7" data-distance="1.4" data-trusted="2" data-open="true">
+          <div class="recz-card-media">
+            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" alt="Nori Handrolls" />
+            <div class="recz-card-overlay"></div>
+            
+            <span class="badge-rank">#2 result</span>
 
-            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
-              Nori Handrolls — Calm Sushi Counter & Fresh Handrolls
-            </h3>
+            <button class="btn-save-circle save-card-btn" aria-label="Save Nori Handrolls" title="Save Nori Handrolls">
+              <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
+            </button>
 
-            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
-              <span class="text-amber-400 font-semibold flex items-center gap-1">
-                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.7
-              </span>
-              <span class="text-zinc-500">(184 reviews)</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">Sushi</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">$$</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">1.4 mi</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-emerald-400 font-medium">Open now</span>
-            </div>
-
-            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-              Quick handroll counter that stays calm during early dinner hours. Great option before a movie or casual evening outing.
-            </p>
-
-            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
-              <div class="flex items-center gap-1.5 text-zinc-400">
-                <div class="flex -space-x-1.5 shrink-0">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                </div>
-                <span><strong class="text-zinc-200 font-medium">2 people you trust</strong> saved this spot</span>
-              </div>
-
-              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Nori Handrolls" data-match="88%" data-signals="Saved by 2 friends, calm early hours, sushi craving match">
-                Why this result?
-              </button>
-            </div>
+            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Nori Handrolls" aria-label="Ask Recs for Nori Handrolls" title="Ask Rexy about Nori Handrolls">
+              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
+            </button>
           </div>
 
-          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
-            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=400&q=80" alt="Nori Handrolls" class="w-full h-full object-cover" />
-            <span class="absolute top-2.5 right-2.5 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Trusted pick</span>
+          <div class="p-5 flex flex-col justify-between gap-4 flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-xl font-bold text-white tracking-tight leading-snug hover:text-rose-400 cursor-pointer transition-colors">
+                  Nori Handrolls
+                </h3>
+                <span class="rating-badge-pill shrink-0">
+                  <iconify-icon icon="solar:star-bold" width="13" class="text-amber-400"></iconify-icon>
+                  <span>4.7</span>
+                </span>
+              </div>
+
+              <div class="flex items-center gap-1.5 text-xs text-zinc-300 font-medium flex-wrap">
+                <span>Sushi</span>
+                <span class="text-zinc-500">·</span>
+                <span>Casual</span>
+                <span class="text-zinc-500">·</span>
+                <span>1.4 mi</span>
+                <span class="text-zinc-500">·</span>
+                <span class="text-emerald-400 font-semibold">Open now</span>
+              </div>
+
+              <p class="text-xs text-zinc-300 leading-relaxed line-clamp-2 pt-0.5">
+                Calm sushi counter & fresh handrolls. Quiet atmosphere during early dinner hours. Great before a movie.
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs text-zinc-400 gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <div class="flex -space-x-1.5 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                  </div>
+                  <span class="truncate"><strong class="text-zinc-200 font-medium">2 friends</strong> saved this</span>
+                </div>
+
+                <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium text-xs flex items-center gap-1 shrink-0" data-venue="Nori Handrolls" data-match="88%">
+                  <span>Why this?</span>
+                  <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="save-card-btn flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-zinc-200 flex items-center justify-center gap-1.5 transition-all">
+                  <iconify-icon icon="solar:bookmark-linear" width="14" class="text-rose-400"></iconify-icon>
+                  <span>Save</span>
+                </button>
+                <button class="ask-recs-btn flex-1 py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 flex items-center justify-center gap-1.5 transition-all" data-venue="Nori Handrolls">
+                  <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
+                  <span>Ask Recs</span>
+                </button>
+              </div>
+            </div>
           </div>
         </article>
 
         <!-- CARD 3: Mizlala at the Park -->
-        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Mediterranean" data-price="$$" data-rating="4.8" data-distance="2.1" data-trusted="4" data-open="true">
-          <div class="flex flex-col gap-2 flex-1 min-w-0">
-            <div class="flex items-center gap-2 text-xs text-zinc-400">
-              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
-              <span class="text-zinc-400 font-medium truncate">recz.com › places › mizlala-park</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">90% taste match</span>
-            </div>
+        <article class="recz-card-13a serp-item" data-category="food" data-cuisine="Mediterranean" data-price="$$" data-rating="4.8" data-distance="2.1" data-trusted="4" data-open="true">
+          <div class="recz-card-media">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Mizlala at the Park" />
+            <div class="recz-card-overlay"></div>
+            
+            <span class="badge-rank">#3 result</span>
 
-            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
-              Mizlala at the Park — Casual Mediterranean & Garden Dining
-            </h3>
+            <button class="btn-save-circle save-card-btn" aria-label="Save Mizlala at the Park" title="Save Mizlala at the Park">
+              <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
+            </button>
 
-            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
-              <span class="text-amber-400 font-semibold flex items-center gap-1">
-                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.8
-              </span>
-              <span class="text-zinc-500">(412 reviews)</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">Mediterranean</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">$$</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">2.1 mi</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-emerald-400 font-medium">Open until 10 PM</span>
-            </div>
-
-            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-              Relaxed outdoor dining with casual shared plates and a quieter evening crowd under parkside heat lamps.
-            </p>
-
-            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
-              <div class="flex items-center gap-1.5 text-zinc-400">
-                <div class="flex -space-x-1.5 shrink-0">
-                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                </div>
-                <span><strong class="text-zinc-200 font-medium">4 people you trust</strong> saved this spot</span>
-              </div>
-
-              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Mizlala at the Park" data-match="90%" data-signals="Outdoor seating match, 4 trusted saves, quiet parkside atmosphere">
-                Why this result?
-              </button>
-            </div>
+            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Mizlala at the Park" aria-label="Ask Recs for Mizlala at the Park" title="Ask Rexy about Mizlala at the Park">
+              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
+            </button>
           </div>
 
-          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
-            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" alt="Mizlala at the Park" class="w-full h-full object-cover" />
-            <span class="absolute top-2.5 right-2.5 bg-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Popular nearby</span>
+          <div class="p-5 flex flex-col justify-between gap-4 flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-xl font-bold text-white tracking-tight leading-snug hover:text-rose-400 cursor-pointer transition-colors">
+                  Mizlala at the Park
+                </h3>
+                <span class="rating-badge-pill shrink-0">
+                  <iconify-icon icon="solar:star-bold" width="13" class="text-amber-400"></iconify-icon>
+                  <span>4.8</span>
+                </span>
+              </div>
+
+              <div class="flex items-center gap-1.5 text-xs text-zinc-300 font-medium flex-wrap">
+                <span>Mediterranean</span>
+                <span class="text-zinc-500">·</span>
+                <span>Garden</span>
+                <span class="text-zinc-500">·</span>
+                <span>2.1 mi</span>
+                <span class="text-zinc-500">·</span>
+                <span class="text-emerald-400 font-semibold">Open until 10 PM</span>
+              </div>
+
+              <p class="text-xs text-zinc-300 leading-relaxed line-clamp-2 pt-0.5">
+                Casual Mediterranean & garden dining with low noise level under parkside heat lamps.
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs text-zinc-400 gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <div class="flex -space-x-1.5 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                  </div>
+                  <span class="truncate"><strong class="text-zinc-200 font-medium">4 friends</strong> saved this</span>
+                </div>
+
+                <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium text-xs flex items-center gap-1 shrink-0" data-venue="Mizlala at the Park" data-match="90%">
+                  <span>Why this?</span>
+                  <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="save-card-btn flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-zinc-200 flex items-center justify-center gap-1.5 transition-all">
+                  <iconify-icon icon="solar:bookmark-linear" width="14" class="text-rose-400"></iconify-icon>
+                  <span>Save</span>
+                </button>
+                <button class="ask-recs-btn flex-1 py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 flex items-center justify-center gap-1.5 transition-all" data-venue="Mizlala at the Park">
+                  <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
+                  <span>Ask Recs</span>
+                </button>
+              </div>
+            </div>
           </div>
         </article>
 
         <!-- CARD 4: Kismet Rotisserie -->
-        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Middle Eastern" data-price="$" data-rating="4.6" data-distance="1.8" data-trusted="3" data-open="true">
-          <div class="flex flex-col gap-2 flex-1 min-w-0">
-            <div class="flex items-center gap-2 text-xs text-zinc-400">
-              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
-              <span class="text-zinc-400 font-medium truncate">recz.com › places › kismet-rotisserie</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">86% taste match</span>
-            </div>
+        <article class="recz-card-13a serp-item" data-category="food" data-cuisine="Middle Eastern" data-price="$" data-rating="4.6" data-distance="1.8" data-trusted="3" data-open="true">
+          <div class="recz-card-media">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Kismet Rotisserie" />
+            <div class="recz-card-overlay"></div>
+            
+            <span class="badge-rank">#4 result</span>
 
-            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
-              Kismet Rotisserie — Cozy Neighborhood Chicken & Dips
-            </h3>
+            <button class="btn-save-circle save-card-btn" aria-label="Save Kismet Rotisserie" title="Save Kismet Rotisserie">
+              <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
+            </button>
 
-            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
-              <span class="text-amber-400 font-semibold flex items-center gap-1">
-                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.6
-              </span>
-              <span class="text-zinc-500">(210 reviews)</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">Middle Eastern</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">$</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">1.8 mi</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-emerald-400 font-medium">Open now</span>
-            </div>
-
-            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-              Bright, cozy neighborhood spot with wood-roasted chicken, fresh pita, and intimate patio seating.
-            </p>
-
-            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
-              <div class="flex items-center gap-1.5 text-zinc-400">
-                <div class="flex -space-x-1.5 shrink-0">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                </div>
-                <span><strong class="text-zinc-200 font-medium">3 people you trust</strong> saved this spot</span>
-              </div>
-
-              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Kismet Rotisserie" data-match="86%" data-signals="Budget friendly ($), cozy vibe match, 3 trusted saves">
-                Why this result?
-              </button>
-            </div>
+            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Kismet Rotisserie" aria-label="Ask Recs for Kismet Rotisserie" title="Ask Rexy about Kismet Rotisserie">
+              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
+            </button>
           </div>
 
-          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="Kismet Rotisserie" class="w-full h-full object-cover" />
-            <span class="absolute top-2.5 right-2.5 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Hidden gem</span>
+          <div class="p-5 flex flex-col justify-between gap-4 flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-xl font-bold text-white tracking-tight leading-snug hover:text-rose-400 cursor-pointer transition-colors">
+                  Kismet Rotisserie
+                </h3>
+                <span class="rating-badge-pill shrink-0">
+                  <iconify-icon icon="solar:star-bold" width="13" class="text-amber-400"></iconify-icon>
+                  <span>4.6</span>
+                </span>
+              </div>
+
+              <div class="flex items-center gap-1.5 text-xs text-zinc-300 font-medium flex-wrap">
+                <span>Middle Eastern</span>
+                <span class="text-zinc-500">·</span>
+                <span>Cozy</span>
+                <span class="text-zinc-500">·</span>
+                <span>1.8 mi</span>
+                <span class="text-zinc-500">·</span>
+                <span class="text-emerald-400 font-semibold">Open now</span>
+              </div>
+
+              <p class="text-xs text-zinc-300 leading-relaxed line-clamp-2 pt-0.5">
+                Cozy neighborhood chicken & dips with wood-roasted items and intimate patio seating.
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs text-zinc-400 gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <div class="flex -space-x-1.5 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                  </div>
+                  <span class="truncate"><strong class="text-zinc-200 font-medium">3 friends</strong> saved this</span>
+                </div>
+
+                <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium text-xs flex items-center gap-1 shrink-0" data-venue="Kismet Rotisserie" data-match="86%">
+                  <span>Why this?</span>
+                  <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="save-card-btn flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-zinc-200 flex items-center justify-center gap-1.5 transition-all">
+                  <iconify-icon icon="solar:bookmark-linear" width="14" class="text-rose-400"></iconify-icon>
+                  <span>Save</span>
+                </button>
+                <button class="ask-recs-btn flex-1 py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 flex items-center justify-center gap-1.5 transition-all" data-venue="Kismet Rotisserie">
+                  <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
+                  <span>Ask Recs</span>
+                </button>
+              </div>
+            </div>
           </div>
         </article>
 
         <!-- CARD 5: Bavel Speakeasy -->
-        <article class="serp-item glass-panel glass-panel-hover p-5 md:p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start justify-between border border-white/10 relative" data-cuisine="Middle Eastern" data-price="$$$" data-rating="4.9" data-distance="2.4" data-trusted="5" data-open="true">
-          <div class="flex flex-col gap-2 flex-1 min-w-0">
-            <div class="flex items-center gap-2 text-xs text-zinc-400">
-              <span class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 font-bold text-[9px]">R</span>
-              <span class="text-zinc-400 font-medium truncate">recz.com › places › bavel-speakeasy</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-xs text-rose-400 font-semibold bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">95% taste match</span>
-            </div>
+        <article class="recz-card-13a serp-item" data-category="food" data-cuisine="Middle Eastern" data-price="$$$" data-rating="4.9" data-distance="2.4" data-trusted="5" data-open="true">
+          <div class="recz-card-media">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80" alt="Bavel Speakeasy" />
+            <div class="recz-card-overlay"></div>
+            
+            <span class="badge-rank">#5 result</span>
 
-            <h3 class="text-xl font-semibold text-rose-400 hover:underline cursor-pointer leading-snug tracking-tight">
-              Bavel Speakeasy & Lounge — Dimly Lit Romantic Dining & Cocktails
-            </h3>
+            <button class="btn-save-circle save-card-btn" aria-label="Save Bavel Speakeasy" title="Save Bavel Speakeasy">
+              <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
+            </button>
 
-            <div class="flex items-center gap-2 text-xs text-zinc-300 font-medium flex-wrap">
-              <span class="text-amber-400 font-semibold flex items-center gap-1">
-                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon> 4.9
-              </span>
-              <span class="text-zinc-500">(580 reviews)</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">Middle Eastern & Cocktails</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">$$$</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-zinc-300">2.4 mi</span>
-              <span class="text-zinc-600">•</span>
-              <span class="text-emerald-400 font-medium">Open until 1 AM</span>
-            </div>
-
-            <p class="text-xs md:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-              Dimly lit, romantic ambience with soft acoustic background music and private booths. Ideal for special quiet dinners.
-            </p>
-
-            <div class="flex items-center gap-4 text-xs pt-1 flex-wrap">
-              <div class="flex items-center gap-1.5 text-zinc-400">
-                <div class="flex -space-x-1.5 shrink-0">
-                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-6 h-6 rounded-full object-cover shrink-0 border-2 border-[#09080b] shadow-sm" />
-                </div>
-                <span><strong class="text-zinc-200 font-medium">5 people you trust</strong> saved this spot</span>
-              </div>
-
-              <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium underline text-xs" data-venue="Bavel Speakeasy" data-match="95%" data-signals="High rating (4.9), late night romantic quiet spot, 5 trusted saves">
-                Why this result?
-              </button>
-            </div>
+            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Bavel Speakeasy" aria-label="Ask Recs for Bavel Speakeasy" title="Ask Rexy about Bavel Speakeasy">
+              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
+            </button>
           </div>
 
-          <div class="relative w-full sm:w-36 md:w-40 h-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/10 shadow-md">
-            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&q=80" alt="Bavel Speakeasy" class="w-full h-full object-cover" />
-            <span class="absolute top-2.5 right-2.5 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Best match</span>
+          <div class="p-5 flex flex-col justify-between gap-4 flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-xl font-bold text-white tracking-tight leading-snug hover:text-rose-400 cursor-pointer transition-colors">
+                  Bavel Speakeasy
+                </h3>
+                <span class="rating-badge-pill shrink-0">
+                  <iconify-icon icon="solar:star-bold" width="13" class="text-amber-400"></iconify-icon>
+                  <span>4.9</span>
+                </span>
+              </div>
+
+              <div class="flex items-center gap-1.5 text-xs text-zinc-300 font-medium flex-wrap">
+                <span>Cocktails</span>
+                <span class="text-zinc-500">·</span>
+                <span>Romantic</span>
+                <span class="text-zinc-500">·</span>
+                <span>2.4 mi</span>
+                <span class="text-zinc-500">·</span>
+                <span class="text-emerald-400 font-semibold">Open until 1 AM</span>
+              </div>
+
+              <p class="text-xs text-zinc-300 leading-relaxed line-clamp-2 pt-0.5">
+                Dimly lit romantic dining & cocktails with private acoustic booths. Ideal for date night dinner.
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs text-zinc-400 gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <div class="flex -space-x-1.5 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                  </div>
+                  <span class="truncate"><strong class="text-zinc-200 font-medium">5 friends</strong> saved this</span>
+                </div>
+
+                <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium text-xs flex items-center gap-1 shrink-0" data-venue="Bavel Speakeasy" data-match="95%">
+                  <span>Why this?</span>
+                  <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="save-card-btn flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-zinc-200 flex items-center justify-center gap-1.5 transition-all">
+                  <iconify-icon icon="solar:bookmark-linear" width="14" class="text-rose-400"></iconify-icon>
+                  <span>Save</span>
+                </button>
+                <button class="ask-recs-btn flex-1 py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 flex items-center justify-center gap-1.5 transition-all" data-venue="Bavel Speakeasy">
+                  <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
+                  <span>Ask Recs</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 6: Catch LA -->
+        <article class="recz-card-13a serp-item" data-category="food" data-cuisine="Seafood" data-price="$$$" data-rating="4.5" data-distance="3.1" data-trusted="2" data-open="true">
+          <div class="recz-card-media">
+            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80" alt="Catch LA" />
+            <div class="recz-card-overlay"></div>
+            
+            <span class="badge-rank">#6 result</span>
+
+            <button class="btn-save-circle save-card-btn" aria-label="Save Catch LA" title="Save Catch LA">
+              <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
+            </button>
+
+            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Catch LA" aria-label="Ask Recs for Catch LA" title="Ask Rexy about Catch LA">
+              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
+            </button>
+          </div>
+
+          <div class="p-5 flex flex-col justify-between gap-4 flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-xl font-bold text-white tracking-tight leading-snug hover:text-rose-400 cursor-pointer transition-colors">
+                  Catch LA
+                </h3>
+                <span class="rating-badge-pill shrink-0">
+                  <iconify-icon icon="solar:star-bold" width="13" class="text-amber-400"></iconify-icon>
+                  <span>4.5</span>
+                </span>
+              </div>
+
+              <div class="flex items-center gap-1.5 text-xs text-zinc-300 font-medium flex-wrap">
+                <span>Seafood</span>
+                <span class="text-zinc-500">·</span>
+                <span>Rooftop</span>
+                <span class="text-zinc-500">·</span>
+                <span>3.1 mi</span>
+                <span class="text-zinc-500">·</span>
+                <span class="text-emerald-400 font-semibold">Open until 12 AM</span>
+              </div>
+
+              <p class="text-xs text-zinc-300 leading-relaxed line-clamp-2 pt-0.5">
+                Vibrant rooftop seafood with lush plant-filled patio and scenic city evening views.
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs text-zinc-400 gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <div class="flex -space-x-1.5 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" class="w-5 h-5 rounded-full object-cover border-2 border-[#09080b]" />
+                  </div>
+                  <span class="truncate"><strong class="text-zinc-200 font-medium">2 friends</strong> saved this</span>
+                </div>
+
+                <button class="why-result-btn text-rose-400 hover:text-rose-300 font-medium text-xs flex items-center gap-1 shrink-0" data-venue="Catch LA" data-match="89%">
+                  <span>Why this?</span>
+                  <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="save-card-btn flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-zinc-200 flex items-center justify-center gap-1.5 transition-all">
+                  <iconify-icon icon="solar:bookmark-linear" width="14" class="text-rose-400"></iconify-icon>
+                  <span>Save</span>
+                </button>
+                <button class="ask-recs-btn flex-1 py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 flex items-center justify-center gap-1.5 transition-all" data-venue="Catch LA">
+                  <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
+                  <span>Ask Recs</span>
+                </button>
+              </div>
+            </div>
           </div>
         </article>
 
@@ -1442,7 +1805,7 @@
           <iconify-icon icon="solar:users-group-two-rounded-bold" width="16" class="text-rose-400 mt-0.5 shrink-0"></iconify-icon>
           <div>
             <strong class="text-white block font-medium">Trusted-circle activity</strong>
-            <span>Saved by 3 people in your trusted circle.</span>
+            <span>Saved by people in your trusted circle.</span>
           </div>
         </div>
       </div>
@@ -1525,13 +1888,103 @@
       });
     }
 
-    // Category Tabs
-    document.querySelectorAll('.category-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+    // 13A Filter Chips (All, Food, Near, Open, Friends, etc.)
+    const filterChips = document.querySelectorAll('.filter-chip-13a');
+    const serpItems = document.querySelectorAll('.serp-item');
+    const resultsCountSub = document.getElementById('resultsCountSub');
+
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const cat = chip.getAttribute('data-category');
+        let visibleCount = 0;
+
+        serpItems.forEach(item => {
+          if (cat === 'all') {
+            item.style.display = 'flex';
+            visibleCount++;
+          } else if (cat === 'food' && item.getAttribute('data-category') === 'food') {
+            item.style.display = 'flex';
+            visibleCount++;
+          } else if (cat === 'near' && parseFloat(item.getAttribute('data-distance')) <= 1.5) {
+            item.style.display = 'flex';
+            visibleCount++;
+          } else if (cat === 'open' && item.getAttribute('data-open') === 'true') {
+            item.style.display = 'flex';
+            visibleCount++;
+          } else if (cat === 'friends' && parseInt(item.getAttribute('data-trusted')) >= 3) {
+            item.style.display = 'flex';
+            visibleCount++;
+          } else if (cat === 'posts' || cat === 'lists') {
+            // Show selection of matching cards
+            item.style.display = visibleCount < 3 ? 'flex' : 'none';
+            if (item.style.display === 'flex') visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (resultsCountSub) {
+          resultsCountSub.textContent = `${visibleCount} results for quiet dinner`;
+        }
       });
     });
+
+    // Bookmark / Save buttons on cards
+    document.querySelectorAll('.save-card-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const icon = btn.querySelector('iconify-icon');
+        const span = btn.querySelector('span');
+
+        if (btn.classList.contains('saved') || (icon && icon.getAttribute('icon') === 'solar:bookmark-bold')) {
+          btn.classList.remove('saved');
+          if (icon) icon.setAttribute('icon', 'solar:bookmark-linear');
+          if (span) span.textContent = 'Save';
+        } else {
+          btn.classList.add('saved');
+          if (icon) icon.setAttribute('icon', 'solar:bookmark-bold');
+          if (span) span.textContent = 'Saved';
+        }
+      });
+    });
+
+    // Ask Recs buttons on cards
+    document.querySelectorAll('.ask-recs-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const venue = btn.getAttribute('data-venue') || 'this spot';
+        const followupInput = document.getElementById('followupInput');
+        if (followupInput) {
+          followupInput.value = `Tell me more about ${venue} for a quiet dinner`;
+          followupInput.focus();
+          followupInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+
+    // Interactive Map Toggle
+    const mapToggleBtn = document.getElementById('mapToggleBtn');
+    const mapToggleText = document.getElementById('mapToggleText');
+    const mapViewContainer = document.getElementById('mapViewContainer');
+    const closeMapBtn = document.getElementById('closeMapBtn');
+
+    function toggleMap() {
+      if (!mapViewContainer) return;
+      const isHidden = mapViewContainer.classList.contains('hidden');
+      if (isHidden) {
+        mapViewContainer.classList.remove('hidden');
+        if (mapToggleText) mapToggleText.textContent = 'Hide map';
+      } else {
+        mapViewContainer.classList.add('hidden');
+        if (mapToggleText) mapToggleText.textContent = 'Map';
+      }
+    }
+
+    mapToggleBtn?.addEventListener('click', toggleMap);
+    closeMapBtn?.addEventListener('click', toggleMap);
 
     // Import Modal elements & interaction ("I'm bored" button)
     const importTriggerBtn = document.getElementById('importTriggerBtn');
