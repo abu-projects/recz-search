@@ -525,6 +525,16 @@
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
     }
 
+    .followup-dock {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 40;
+      padding: 12px max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      pointer-events: none;
+    }
+
     /* Category Navigation Tabs */
     .category-tab {
       position: relative;
@@ -685,27 +695,6 @@
       background: var(--brand-rose);
       border-color: var(--brand-rose);
       color: #ffffff;
-    }
-
-    .btn-ask-recs-fab {
-      position: absolute;
-      bottom: 14px;
-      right: 14px;
-      z-index: 10;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      background: var(--brand-gradient);
-      color: #ffffff;
-      display: inline-grid;
-      place-items: center;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(244, 63, 94, 0.45);
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-    .btn-ask-recs-fab:hover {
-      transform: scale(1.12) rotate(6deg);
-      box-shadow: 0 12px 32px rgba(244, 63, 94, 0.65);
     }
 
     .rating-badge-pill {
@@ -965,10 +954,6 @@
       color: #0f172a;
     }
 
-    html[data-theme="light"] #searchContextRow {
-      color: #64748b;
-    }
-
     html[data-theme="light"] .text-zinc-100,
     html[data-theme="light"] .text-zinc-200,
     html[data-theme="light"] .text-white {
@@ -1096,7 +1081,7 @@
     </header>
 
     <!-- MAIN CENTERED CONTENT CONTAINER -->
-    <main class="pt-28 pb-20 px-4 md:px-12 lg:px-16 max-w-[1340px] mx-auto w-full flex flex-col gap-6">
+    <main class="pt-28 pb-40 px-4 md:px-12 lg:px-16 max-w-[1340px] mx-auto w-full flex flex-col gap-6">
       
       <!-- SEARCH AREA (Shared Search Composer anchored under header) -->
       <section id="search-area" class="w-full flex flex-col gap-3">
@@ -1125,30 +1110,11 @@
           </div>
         </form>
 
-        <!-- LIGHTWEIGHT SEARCH CONTEXT ROW -->
-        <div id="searchContextRow" class="flex items-center gap-2 text-xs text-zinc-400 px-2 pt-1 overflow-x-auto scrollbar-none">
-          <span class="text-zinc-500 font-medium shrink-0 flex items-center gap-1">
-            <iconify-icon icon="solar:tuning-2-linear" width="14"></iconify-icon> Search context:
-          </span>
-          <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-200 font-medium">Quiet dinner place near me</span>
-          <span id="refinementTag" class="hidden items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 font-medium">
-            <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
-            <span id="refinementText">Best for a date</span>
-          </span>
-        </div>
       </section>
 
-      <!-- 13A FILTER CHIPS ROW (All, Food, Near, Open, Friends, etc.) -->
+      <!-- QUERY-AWARE FILTER CHIPS -->
       <section class="w-full pt-1">
-        <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none" role="tablist" id="filterChipsRow">
-          <button class="filter-chip-13a active" role="tab" aria-selected="true" data-category="all">All</button>
-          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="food">Food</button>
-          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="near">Near</button>
-          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="open">Open</button>
-          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="friends">Friends</button>
-          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="posts">Posts</button>
-          <button class="filter-chip-13a" role="tab" aria-selected="false" data-category="lists">Lists</button>
-        </div>
+        <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none" role="group" aria-label="Filter search results" id="filterChipsRow"></div>
       </section>
 
       <!-- REXY SUMMARY (Full-width Liquid Glass Panel) -->
@@ -1184,10 +1150,6 @@
           </div>
 
           <div class="flex items-center gap-3 pt-2">
-            <button id="showWhySummaryBtn" class="text-xs font-medium text-rose-400 hover:text-rose-300 flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20">
-              <iconify-icon icon="solar:question-square-linear" width="14"></iconify-icon>
-              <span>Show why</span>
-            </button>
             <button id="askFollowupSummaryBtn" class="text-xs font-medium text-zinc-300 hover:text-white flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10">
               <iconify-icon icon="solar:chat-round-line-linear" width="14"></iconify-icon>
               <span>Ask a follow-up</span>
@@ -1212,8 +1174,8 @@
           </div>
 
           <div class="flex items-center gap-3">
-            <button id="mapToggleBtn" class="glass-panel hover:bg-white/10 px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-zinc-100 border border-white/12 transition-all shadow-sm">
-              <iconify-icon icon="solar:map-line-duotone" width="16" class="text-rose-400"></iconify-icon>
+            <button id="mapToggleBtn" type="button" aria-expanded="false" aria-controls="mapViewContainer" class="glass-panel hover:bg-white/10 px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-zinc-100 border border-white/12 shadow-sm">
+              <iconify-icon id="mapToggleIcon" icon="solar:map-line-duotone" width="16" class="text-rose-400"></iconify-icon>
               <span id="mapToggleText">Map</span>
             </button>
 
@@ -1230,7 +1192,7 @@
         </div>
 
         <!-- INTERACTIVE MAP CONTAINER (Hidden by default, toggled via Map button) -->
-        <div id="mapViewContainer" class="hidden w-full h-[380px] rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl transition-all duration-300">
+        <div id="mapViewContainer" class="hidden w-full h-[380px] rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl">
           <div class="absolute inset-0 bg-[#0f0e13] flex flex-col justify-between p-6">
             <div class="absolute inset-0 opacity-30 bg-[radial-gradient(#f43f5e_1.2px,transparent_1.2px)] [background-size:28px_28px]"></div>
             
@@ -1240,7 +1202,7 @@
                 <iconify-icon icon="solar:map-point-wave-bold" class="text-rose-400" width="16"></iconify-icon>
                 <span>Interactive Area View · West Hollywood</span>
               </span>
-              <button id="closeMapBtn" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/15 hover:bg-white/20">
+              <button id="closeMapBtn" type="button" aria-label="Close result view" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/15 hover:bg-white/20">
                 <iconify-icon icon="solar:close-circle-linear" width="18"></iconify-icon>
               </button>
             </div>
@@ -1299,9 +1261,6 @@
             </button>
 
             <!-- Floating Action Button (13A Magic Recs button) -->
-            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Patio Kitchen" aria-label="Ask Recs for Patio Kitchen" title="Ask Rexy about Patio Kitchen">
-              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
-            </button>
           </div>
 
           <!-- Card Content Body -->
@@ -1378,9 +1337,6 @@
               <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
             </button>
 
-            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Nori Handrolls" aria-label="Ask Recs for Nori Handrolls" title="Ask Rexy about Nori Handrolls">
-              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
-            </button>
           </div>
 
           <div class="p-5 flex flex-col justify-between gap-4 flex-1">
@@ -1451,9 +1407,6 @@
               <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
             </button>
 
-            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Mizlala at the Park" aria-label="Ask Recs for Mizlala at the Park" title="Ask Rexy about Mizlala at the Park">
-              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
-            </button>
           </div>
 
           <div class="p-5 flex flex-col justify-between gap-4 flex-1">
@@ -1525,9 +1478,6 @@
               <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
             </button>
 
-            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Kismet Rotisserie" aria-label="Ask Recs for Kismet Rotisserie" title="Ask Rexy about Kismet Rotisserie">
-              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
-            </button>
           </div>
 
           <div class="p-5 flex flex-col justify-between gap-4 flex-1">
@@ -1598,9 +1548,6 @@
               <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
             </button>
 
-            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Bavel Speakeasy" aria-label="Ask Recs for Bavel Speakeasy" title="Ask Rexy about Bavel Speakeasy">
-              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
-            </button>
           </div>
 
           <div class="p-5 flex flex-col justify-between gap-4 flex-1">
@@ -1672,9 +1619,6 @@
               <iconify-icon icon="solar:bookmark-linear" width="18"></iconify-icon>
             </button>
 
-            <button class="btn-ask-recs-fab ask-recs-btn" data-venue="Catch LA" aria-label="Ask Recs for Catch LA" title="Ask Rexy about Catch LA">
-              <iconify-icon icon="solar:magic-stick-3-bold" width="22"></iconify-icon>
-            </button>
           </div>
 
           <div class="p-5 flex flex-col justify-between gap-4 flex-1">
@@ -1735,21 +1679,27 @@
 
       </section>
 
-      <!-- FOLLOW-UP SEARCH AT BOTTOM -->
+      <!-- SUGGESTED FOLLOW-UPS AT BOTTOM OF RESULTS -->
       <section class="mt-6 flex flex-col gap-3">
         <!-- Suggested Follow-Up Action Chips -->
         <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs text-zinc-400 scrollbar-none">
           <span class="text-rose-400 font-semibold text-[11px] shrink-0 flex items-center gap-1">
-            <iconify-icon icon="solar:stars-minimalistic-bold" width="13"></iconify-icon> Suggested refinements:
+            <iconify-icon icon="solar:stars-minimalistic-bold" width="13"></iconify-icon> Suggested follow-ups:
           </span>
           <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Which one is best for a date?">Which one is best for a date?</button>
           <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Only show outdoor places">Only show outdoor places</button>
           <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Remove sushi">Remove sushi</button>
           <button class="followup-chip glass-panel hover:border-rose-500/40 hover:text-white px-3.5 py-1.5 rounded-full text-zinc-300 bg-white/5 whitespace-nowrap" data-prompt="Show cheaper options">Show cheaper options</button>
         </div>
+        <p id="followupStatus" class="sr-only" aria-live="polite"></p>
 
-        <!-- Follow-Up Search Composer Bar -->
-        <form id="followupForm" class="glass-panel p-3.5 rounded-3xl border border-white/15 shadow-2xl backdrop-blur-2xl bg-[#0a090c]/90 flex items-center gap-3">
+      </section>
+
+    </main>
+
+    <!-- PERSISTENT FOLLOW-UP COMPOSER -->
+    <div class="followup-dock" aria-label="Ask a follow-up">
+      <form id="followupForm" class="glass-panel max-w-[1340px] mx-auto p-3.5 rounded-3xl border border-white/15 shadow-2xl backdrop-blur-2xl bg-[#0a090c]/90 flex items-center gap-3 pointer-events-auto">
           <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-rose-500/25">
             <iconify-icon icon="solar:stars-minimalistic-bold" width="20"></iconify-icon>
           </div>
@@ -1757,21 +1707,19 @@
           <input 
             type="text" 
             id="followupInput" 
-            placeholder="Refine this search or ask a follow-up..." 
+            placeholder="Ask a follow-up about these results..." 
             class="flex-1 bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none" 
           />
 
-          <button type="button" class="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-rose-400 hover:bg-white/5">
+          <button type="button" aria-label="Use voice for follow-up" class="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-rose-400 hover:bg-white/5">
             <iconify-icon icon="solar:microphone-linear" width="20"></iconify-icon>
           </button>
 
-          <button type="submit" class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white hover:scale-105 transition-transform shrink-0 shadow-md shadow-rose-500/30">
+          <button type="submit" aria-label="Submit follow-up" class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white hover:scale-105 transition-transform shrink-0 shadow-md shadow-rose-500/30">
             <iconify-icon icon="solar:arrow-up-linear" width="20"></iconify-icon>
           </button>
-        </form>
-      </section>
-
-    </main>
+      </form>
+    </div>
 
   </div>
 
@@ -1888,46 +1836,87 @@
       });
     }
 
-    // 13A Filter Chips (All, Food, Near, Open, Friends, etc.)
-    const filterChips = document.querySelectorAll('.filter-chip-13a');
+    // Query-aware filters keep the same component useful across result types.
+    const filterPresets = {
+      food: [
+        ['all', 'All'], ['cuisine', 'Cuisine'], ['distance', 'Distance'],
+        ['open', 'Open now'], ['price', 'Price'], ['friends', 'Friends']
+      ],
+      movie: [
+        ['all', 'All'], ['genre', 'Genre'], ['streaming', 'Streaming on'],
+        ['release', 'Release year'], ['runtime', 'Runtime'], ['friends', 'Friends']
+      ],
+      book: [
+        ['all', 'All'], ['genre', 'Genre'], ['format', 'Format'],
+        ['length', 'Length'], ['published', 'Published'], ['friends', 'Friends']
+      ],
+      music: [
+        ['all', 'All'], ['genre', 'Genre'], ['mood', 'Mood'],
+        ['era', 'Era'], ['duration', 'Duration'], ['friends', 'Friends']
+      ],
+      general: [
+        ['all', 'All'], ['category', 'Category'], ['best', 'Best match'],
+        ['friends', 'Friends'], ['posts', 'Posts'], ['lists', 'Lists']
+      ]
+    };
+
+    function detectResultType(query) {
+      const normalized = query.toLowerCase();
+      if (/\b(movie|film|cinema|tv|series|actor|director)\b/.test(normalized)) return 'movie';
+      if (/\b(book|novel|read|author|memoir|fiction|nonfiction)\b/.test(normalized)) return 'book';
+      if (/\b(song|music|album|artist|playlist|listen|track)\b/.test(normalized)) return 'music';
+      if (/\b(food|restaurant|dinner|lunch|breakfast|brunch|cafe|coffee|sushi|eat)\b/.test(normalized)) return 'food';
+      return 'general';
+    }
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const initialQuery = queryParams.get('q')?.trim() || 'Quiet dinner place near me';
+    const resultType = detectResultType(initialQuery);
+    const filterChipsRow = document.getElementById('filterChipsRow');
     const serpItems = document.querySelectorAll('.serp-item');
     const resultsCountSub = document.getElementById('resultsCountSub');
 
-    filterChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        filterChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
+    const initialSearchInput = document.getElementById('searchInput');
+    if (initialSearchInput) initialSearchInput.value = initialQuery;
+    document.title = `RECZ Search — ${initialQuery}`;
+    if (resultsCountSub) resultsCountSub.textContent = `${serpItems.length} results for ${initialQuery}`;
 
-        const cat = chip.getAttribute('data-category');
+    filterPresets[resultType].forEach(([key, label], index) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = `filter-chip-13a${index === 0 ? ' active' : ''}`;
+      chip.dataset.filter = key;
+      chip.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+      chip.textContent = label;
+      filterChipsRow?.appendChild(chip);
+    });
+
+    document.querySelectorAll('.filter-chip-13a').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip-13a').forEach(c => {
+          c.classList.remove('active');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        chip.classList.add('active');
+        chip.setAttribute('aria-pressed', 'true');
+
+        const filter = chip.dataset.filter;
         let visibleCount = 0;
 
-        serpItems.forEach(item => {
-          if (cat === 'all') {
-            item.style.display = 'flex';
-            visibleCount++;
-          } else if (cat === 'food' && item.getAttribute('data-category') === 'food') {
-            item.style.display = 'flex';
-            visibleCount++;
-          } else if (cat === 'near' && parseFloat(item.getAttribute('data-distance')) <= 1.5) {
-            item.style.display = 'flex';
-            visibleCount++;
-          } else if (cat === 'open' && item.getAttribute('data-open') === 'true') {
-            item.style.display = 'flex';
-            visibleCount++;
-          } else if (cat === 'friends' && parseInt(item.getAttribute('data-trusted')) >= 3) {
-            item.style.display = 'flex';
-            visibleCount++;
-          } else if (cat === 'posts' || cat === 'lists') {
-            // Show selection of matching cards
-            item.style.display = visibleCount < 3 ? 'flex' : 'none';
-            if (item.style.display === 'flex') visibleCount++;
-          } else {
-            item.style.display = 'none';
-          }
+        serpItems.forEach((item, itemIndex) => {
+          const isMatch = filter === 'all'
+            || (filter === 'distance' && parseFloat(item.dataset.distance) <= 1.5)
+            || (filter === 'open' && item.dataset.open === 'true')
+            || (filter === 'friends' && parseInt(item.dataset.trusted, 10) >= 3)
+            || ((filter === 'posts' || filter === 'lists') && itemIndex < 3)
+            || !['distance', 'open', 'friends', 'posts', 'lists'].includes(filter);
+
+          item.style.display = isMatch ? 'flex' : 'none';
+          if (isMatch) visibleCount++;
         });
 
         if (resultsCountSub) {
-          resultsCountSub.textContent = `${visibleCount} results for quiet dinner`;
+          resultsCountSub.textContent = `${visibleCount} results for ${initialQuery}`;
         }
       });
     });
@@ -1965,10 +1954,84 @@
       });
     });
 
-    // Interactive Map Toggle
+    // Query-aware result view: geography for places, availability for media.
     const mapToggleBtn = document.getElementById('mapToggleBtn');
     const mapToggleText = document.getElementById('mapToggleText');
+    const mapToggleIcon = document.getElementById('mapToggleIcon');
     const mapViewContainer = document.getElementById('mapViewContainer');
+
+    const resultViewConfigs = {
+      food: {
+        label: 'Map',
+        hideLabel: 'Hide map',
+        icon: 'solar:map-line-duotone'
+      },
+      movie: {
+        label: 'Where to watch',
+        hideLabel: 'Hide watch options',
+        icon: 'solar:tv-linear',
+        title: 'Where to watch',
+        description: 'Compare streaming, rental, and nearby cinema availability for the top matches.',
+        options: [['Streaming', 'Included'], ['Digital rental', 'From $3.99'], ['Nearby cinemas', '4 showtimes']]
+      },
+      book: {
+        label: 'Formats',
+        hideLabel: 'Hide formats',
+        icon: 'solar:book-2-linear',
+        title: 'Formats and availability',
+        description: 'Compare editions, prices, audiobook length, and local library availability.',
+        options: [['Hardcover', 'From $18.99'], ['E-book', 'From $9.99'], ['Audiobook', '8h 42m']]
+      },
+      music: {
+        label: 'Listen on',
+        hideLabel: 'Hide listening options',
+        icon: 'solar:headphones-round-linear',
+        title: 'Listen on your service',
+        description: 'Open the recommendation on your preferred music service or preview it here.',
+        options: [['Spotify', 'Play'], ['Apple Music', 'Play'], ['YouTube Music', 'Play']]
+      },
+      general: {
+        label: 'Compare',
+        hideLabel: 'Hide comparison',
+        icon: 'solar:sort-horizontal-linear',
+        title: 'Compare top matches',
+        description: 'See the strongest signals side by side without losing your place in the results.',
+        options: [['Taste match', '92%'], ['Friend signals', '4'], ['Saved lists', '3']]
+      }
+    };
+
+    const resultViewConfig = resultViewConfigs[resultType];
+
+    if (mapToggleText) mapToggleText.textContent = resultViewConfig.label;
+    if (mapToggleIcon) mapToggleIcon.setAttribute('icon', resultViewConfig.icon);
+    mapToggleBtn?.setAttribute('aria-label', resultViewConfig.label);
+
+    if (resultType !== 'food' && mapViewContainer) {
+      const optionCards = resultViewConfig.options.map(([label, value]) => `
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <p class="text-xs text-zinc-400">${label}</p>
+          <p class="mt-2 text-base font-semibold text-white">${value}</p>
+        </div>
+      `).join('');
+
+      mapViewContainer.innerHTML = `
+        <div class="absolute inset-0 bg-[#0f0e13] p-6 flex flex-col justify-between">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-semibold uppercase text-rose-300">Alternative result view</p>
+              <h3 class="mt-2 text-xl font-semibold text-white text-balance">${resultViewConfig.title}</h3>
+              <p class="mt-2 max-w-2xl text-sm text-zinc-400 text-pretty">${resultViewConfig.description}</p>
+            </div>
+            <button id="closeMapBtn" type="button" aria-label="Close result view" class="w-8 h-8 shrink-0 rounded-full bg-black/60 text-white flex items-center justify-center border border-white/15 hover:bg-white/20">
+              <iconify-icon icon="solar:close-circle-linear" width="18"></iconify-icon>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">${optionCards}</div>
+          <p class="text-xs text-zinc-500">Availability and pricing may vary by region.</p>
+        </div>
+      `;
+    }
+
     const closeMapBtn = document.getElementById('closeMapBtn');
 
     function toggleMap() {
@@ -1976,10 +2039,12 @@
       const isHidden = mapViewContainer.classList.contains('hidden');
       if (isHidden) {
         mapViewContainer.classList.remove('hidden');
-        if (mapToggleText) mapToggleText.textContent = 'Hide map';
+        mapToggleBtn?.setAttribute('aria-expanded', 'true');
+        if (mapToggleText) mapToggleText.textContent = resultViewConfig.hideLabel;
       } else {
         mapViewContainer.classList.add('hidden');
-        if (mapToggleText) mapToggleText.textContent = 'Map';
+        mapToggleBtn?.setAttribute('aria-expanded', 'false');
+        if (mapToggleText) mapToggleText.textContent = resultViewConfig.label;
       }
     }
 
@@ -2055,7 +2120,7 @@
     const whyModalOverlay = document.getElementById('whyModalOverlay');
     const whyTitle = document.getElementById('whyTitle');
 
-    document.querySelectorAll('.why-result-btn, #showWhySummaryBtn').forEach(btn => {
+    document.querySelectorAll('.why-result-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const venue = btn.getAttribute('data-venue') || 'Patio Kitchen';
         if (whyTitle) whyTitle.textContent = `Why ${venue}?`;
@@ -2080,28 +2145,33 @@
       }
     });
 
-    // Conversational Followup
-    function handleFollowup(text) {
-      const tag = document.getElementById('refinementTag');
-      const txt = document.getElementById('refinementText');
-      if (txt) txt.textContent = text;
-      if (tag) {
-        tag.classList.remove('hidden');
-        tag.classList.add('flex');
-      }
+    // Conversational follow-ups
+    function applyFollowup(text) {
+      const status = document.getElementById('followupStatus');
+      if (resultsCountSub) resultsCountSub.textContent = `Follow-up: ${text}`;
+      if (status) status.textContent = `Follow-up applied: ${text}`;
     }
 
     document.querySelectorAll('.followup-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        handleFollowup(btn.getAttribute('data-prompt'));
+        const input = document.getElementById('followupInput');
+        if (input) {
+          input.value = btn.getAttribute('data-prompt') || '';
+          input.focus();
+        }
       });
+    });
+
+    document.getElementById('askFollowupSummaryBtn')?.addEventListener('click', () => {
+      const input = document.getElementById('followupInput');
+      input?.focus();
     });
 
     document.getElementById('followupForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
       const input = document.getElementById('followupInput');
       if (input && input.value.trim()) {
-        handleFollowup(input.value.trim());
+        applyFollowup(input.value.trim());
         input.value = '';
       }
     });
