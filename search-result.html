@@ -1039,6 +1039,166 @@
     html[data-theme="light"] #whyModalOverlay {
       background-color: rgba(15, 23, 42, 0.4) !important;
     }
+
+    /* Responsive layout: progressively collapse navigation and dense controls. */
+    @media (max-width: 980px) {
+      .top-nav {
+        grid-template-columns: auto 1fr auto;
+        gap: 16px;
+        padding-inline: max(16px, env(safe-area-inset-left));
+      }
+
+      .nav-links { gap: 18px; }
+
+      .search-shortcut,
+      .icon-button:not(#themeToggle),
+      .avatar-button { display: none; }
+
+      main {
+        padding-right: 24px !important;
+        padding-left: 24px !important;
+      }
+
+      .search-composer {
+        gap: 12px;
+        padding-inline: 16px;
+      }
+
+      .import-trigger-btn { padding-inline: 16px; }
+    }
+
+    @media (max-width: 700px) {
+      .top-nav {
+        height: calc(64px + env(safe-area-inset-top));
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding-top: env(safe-area-inset-top);
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-left: max(12px, env(safe-area-inset-left));
+      }
+
+      .brand {
+        gap: 8px;
+        font-size: 1.45rem;
+      }
+
+      .brand-logo { width: 32px; height: 32px; }
+      .nav-links,
+      .avatar-button { display: none; }
+      .nav-actions { gap: 8px; }
+
+      .ask-rexy {
+        width: 44px;
+        padding: 0;
+        justify-content: center;
+        border-radius: var(--radius-pill);
+      }
+
+      .ask-rexy span { display: none; }
+
+      main {
+        gap: 18px !important;
+        padding: calc(88px + env(safe-area-inset-top)) 16px calc(124px + env(safe-area-inset-bottom)) !important;
+      }
+
+      .search-composer {
+        min-height: 132px;
+        height: auto;
+        grid-template-columns: 44px 24px minmax(0, 1fr);
+        gap: 10px;
+        padding: 14px;
+        border-radius: 28px;
+      }
+
+      .composer-divider,
+      .import-btn-text { display: none; }
+
+      .import-trigger-btn {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .search-input { font-size: 0.96rem; }
+
+      .composer-actions {
+        grid-column: 1 / -1;
+        width: 100%;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .composer-icon { width: 44px; height: 44px; }
+      .composer-actions .composer-icon:nth-of-type(2) { display: none; }
+      .submit-search { width: 48px; height: 48px; }
+
+      #filterChipsRow {
+        margin-inline: -16px;
+        padding-inline: 16px;
+        scroll-padding-inline: 16px;
+      }
+
+      #filterChipsRow::after { content: ""; flex: 0 0 6px; }
+      .filter-chip-13a { min-height: 42px; padding-inline: 16px; }
+      #resultsList { gap: 16px; }
+      .recz-card-13a { border-radius: 24px; }
+      .recz-card-media { aspect-ratio: 16 / 9; }
+
+      #mapViewContainer { height: 460px; }
+      #mapViewContainer > div { padding: 16px; }
+      #mapViewContainer > div > div:nth-child(3) {
+        flex-direction: column;
+        gap: 16px;
+        padding-block: 24px;
+      }
+
+      .followup-dock {
+        padding: 8px max(10px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+      }
+
+      #followupForm {
+        gap: 8px;
+        padding: 10px;
+        border-radius: 24px;
+      }
+
+      #followupForm > div:first-child,
+      #followupForm button[type="button"] { display: none; }
+
+      #followupInput { min-width: 0; font-size: 0.82rem; }
+
+      .import-modal-overlay {
+        align-items: end;
+        padding: 12px;
+      }
+
+      .import-modal-container {
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+        padding: 28px 20px 20px;
+        border-radius: 28px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .brand span { display: none; }
+      .search-composer {
+        grid-template-columns: 42px 22px minmax(0, 1fr);
+        padding: 12px;
+      }
+      .import-trigger-btn,
+      .composer-icon { width: 42px; height: 42px; }
+      .search-input { font-size: 0.9rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
   </style>
 </head>
 <body>
