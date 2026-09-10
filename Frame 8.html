@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>RECZ - Search</title>
+  <title>RECZ - Frame 8</title>
   <link rel="icon" href="logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -237,7 +237,7 @@
       stroke-width: 1.7;
     }
 
-    /* --- Expanded View (Frame 11 Content) --- */
+    /* --- Expanded View (Sidebar Content) --- */
     .sidebar-expanded-view {
       position: absolute;
       top: 0;
@@ -695,190 +695,148 @@
       transform: translateY(-50%) scale(1);
     }
 
-    /* Central Content Stage */
+    /* =========================================================
+       CENTRAL CONTENT STAGE (Frame 8: Checking your taste + Spinner)
+       ========================================================= */
     .content-stage {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 0 24px 60px;
+      justify-content: space-between;
+      padding: 20px 24px 44px;
       max-width: 900px;
       margin: 0 auto;
       width: 100%;
-      margin-top: -30px; /* Optical vertical centering matching Figma */
+      min-height: calc(100vh - 80px);
     }
 
-    /* Main Title */
-    .hero-title {
-      font-size: clamp(34px, 3.2vw, 48px);
-      font-weight: 500;
-      letter-spacing: -0.025em;
-      line-height: 1.25;
-      text-align: center;
-      color: #ffffff;
-      margin-bottom: 12px;
+    .stage-spacer-top {
+      flex: 1;
     }
 
-    .hero-title .accent-rose {
-      color: #f43f5e;
-      font-weight: 500;
+    /* Central Checking Container */
+    .checking-taste-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 20px 0;
+      user-select: none;
     }
 
-    /* Subtitle */
-    .hero-subtitle {
-      font-size: clamp(14px, 1.05vw, 16px);
-      font-weight: 300;
-      letter-spacing: -0.01em;
-      color: #9ca3af;
-      text-align: center;
-      margin-bottom: 34px;
-      max-width: 680px;
-      line-height: 1.5;
-    }
-
-    .hero-subtitle .rexy-highlight {
-      color: #f43f5e;
+    /* Checking label: Clock icon + "Checking your taste .." */
+    .checking-label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #c4c4cc;
+      font-size: 13.5px;
       font-weight: 400;
+      letter-spacing: -0.01em;
     }
 
-    /* Action Filter Chips */
-    .pill-group {
+    .checking-clock-icon {
+      width: 14px;
+      height: 14px;
+      stroke: #a1a1aa;
+      fill: none;
+      stroke-width: 1.9;
+      flex-shrink: 0;
+    }
+
+    .checking-text {
+      color: #b0b0ba;
+      letter-spacing: 0.01em;
+    }
+
+    .checking-dots {
+      display: inline-block;
+      min-width: 14px;
+      animation: dots-blink 1.5s infinite;
+    }
+
+    @keyframes dots-blink {
+      0%, 20% { content: '.'; opacity: 0.3; }
+      40% { content: '..'; opacity: 0.7; }
+      60%, 100% { content: '...'; opacity: 1; }
+    }
+
+    /* =========================================================
+       FIGMA FRAME 8 SPINNER (Radiating Petal / Radial Burst Spinner)
+       ========================================================= */
+    .taste-spinner-wrapper {
+      position: relative;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
+      margin-top: 6px;
     }
 
-    .filter-pill {
+    /* Radial Petal Spinner - crisp and clean without blurry overlays */
+    .taste-spinner {
       position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      height: 46px;
-      padding: 0 22px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.045);
-      color: #ffffff;
-      font-size: 0.95rem;
-      font-weight: 500;
-      font-family: var(--font-sans);
-      white-space: nowrap;
-      cursor: pointer;
-      overflow: hidden;
-      backdrop-filter: blur(20px) brightness(1.08);
-      -webkit-backdrop-filter: blur(20px) brightness(1.08);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
-      flex-shrink: 0;
-      text-decoration: none;
-      user-select: none;
-      --mouse-x: 50%;
-      --mouse-y: 50%;
-      --border-angle: 0deg;
+      width: 32px;
+      height: 32px;
+      animation: spinner-rotate 1s steps(12, end) infinite;
     }
 
-    /* Google AI Mode Orbiting Spectral Border & Outer Glow (exact from index.backup.html) */
-    .filter-pill::before {
-      content: "";
+    .spinner-petal {
       position: absolute;
-      inset: -4px;
+      left: 50%;
+      top: 0;
+      width: 2.5px;
+      height: 8px;
+      margin-left: -1.25px;
+      background-color: #f43f5e;
       border-radius: 9999px;
-      background: conic-gradient(
-        from var(--border-angle, 0deg) at 50% 50%,
-        #fb923c 0deg,
-        #f43f5e 35deg,
-        #db2777 70deg,
-        #a855f7 105deg,
-        #38bdf8 140deg,
-        transparent 210deg
-      );
-      filter: blur(10px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 240ms ease;
-      z-index: 1;
+      transform-origin: 50% 16px;
     }
 
-    .filter-pill::after {
-      content: "";
-      position: absolute;
-      inset: -1.5px;
-      border-radius: inherit;
-      padding: 1.5px;
-      background: conic-gradient(
-        from var(--border-angle, 0deg) at 50% 50%,
-        #fb923c 0deg,
-        #f43f5e 35deg,
-        #db2777 70deg,
-        #a855f7 105deg,
-        #38bdf8 140deg,
-        transparent 210deg
-      );
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 220ms ease;
-      z-index: 2;
+    /* 12 Petals around circle with decaying opacity */
+    .petal-1  { transform: rotate(0deg);   opacity: 1; }
+    .petal-2  { transform: rotate(30deg);  opacity: 0.92; }
+    .petal-3  { transform: rotate(60deg);  opacity: 0.83; }
+    .petal-4  { transform: rotate(90deg);  opacity: 0.75; }
+    .petal-5  { transform: rotate(120deg); opacity: 0.66; }
+    .petal-6  { transform: rotate(150deg); opacity: 0.58; }
+    .petal-7  { transform: rotate(180deg); opacity: 0.5; }
+    .petal-8  { transform: rotate(210deg); opacity: 0.41; }
+    .petal-9  { transform: rotate(240deg); opacity: 0.33; }
+    .petal-10 { transform: rotate(270deg); opacity: 0.25; }
+    .petal-11 { transform: rotate(300deg); opacity: 0.16; }
+    .petal-12 { transform: rotate(330deg); opacity: 0.08; }
+
+    @keyframes spinner-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    .filter-pill:hover::before,
-    .filter-pill:hover::after {
-      opacity: 1;
+    .stage-spacer-bottom {
+      flex: 1;
     }
 
-    .filter-pill > * {
-      position: relative;
-      z-index: 3;
-    }
-
-    .filter-pill .pill-mood-icon {
-      color: #fda4af;
-      transition: transform 180ms ease, color 180ms ease;
-      flex-shrink: 0;
-    }
-
-    .filter-pill:hover {
-      transform: translateY(-1px);
-      border-color: rgba(244, 63, 94, 0.45);
-      color: #ffffff;
-      box-shadow: 0 6px 26px rgba(244, 63, 94, 0.32);
-    }
-
-    .filter-pill:hover .pill-mood-icon {
-      color: #ffffff;
-      transform: scale(1.12);
-    }
-
-    .filter-pill:active {
-      transform: scale(0.98);
-    }
-
-    /* Search Container */
+    /* Search Container (Bottom) */
     .search-box-wrapper {
       width: 100%;
-      max-width: 630px;
+      max-width: 590px;
       position: relative;
-      margin-bottom: 42px;
+      margin: 0 auto;
     }
 
     .search-box {
       width: 100%;
-      height: 60px;
+      height: 54px;
       background: var(--search-bg);
       border: 1px solid var(--search-border);
       border-radius: 9999px;
-      padding: 6px 8px 6px 24px;
+      padding: 5px 6px 5px 22px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       backdrop-filter: blur(28px) saturate(180%);
       -webkit-backdrop-filter: blur(28px) saturate(180%);
       box-shadow: 
@@ -906,8 +864,8 @@
     }
 
     .search-icon-left svg {
-      width: 20px;
-      height: 20px;
+      width: 19px;
+      height: 19px;
       stroke: currentColor;
       fill: none;
       stroke-width: 1.8;
@@ -919,7 +877,7 @@
       border: none;
       outline: none;
       color: #ffffff;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 300;
       font-family: var(--font-sans);
       letter-spacing: -0.01em;
@@ -933,13 +891,13 @@
     .search-actions-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
     .mic-action-btn {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: transparent;
       border: none;
@@ -957,8 +915,8 @@
     }
 
     .mic-action-btn svg {
-      width: 19px;
-      height: 19px;
+      width: 18px;
+      height: 18px;
       stroke: currentColor;
       fill: none;
       stroke-width: 1.8;
@@ -966,8 +924,8 @@
 
     /* Rose Audio Wave Pill Button */
     .rexy-voice-pill-btn {
-      height: 44px;
-      width: 50px;
+      height: 40px;
+      width: 44px;
       border-radius: 9999px;
       background: linear-gradient(135deg, #f43f5e 0%, #db2777 100%);
       border: none;
@@ -975,7 +933,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(244, 63, 94, 0.48);
+      box-shadow: 0 4px 16px rgba(244, 63, 94, 0.45);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
@@ -983,7 +941,7 @@
 
     .rexy-voice-pill-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 24px rgba(244, 63, 94, 0.65);
+      box-shadow: 0 6px 20px rgba(244, 63, 94, 0.6);
       filter: brightness(1.06);
     }
 
@@ -991,7 +949,7 @@
       transform: scale(0.96);
     }
 
-    /* Soundwave bars animation inside the button */
+    /* Soundwave bars animation */
     .soundwave-container {
       display: flex;
       align-items: center;
@@ -1024,92 +982,7 @@
       100% { height: 18px; }
     }
 
-    /* Prompt Suggestions Grid */
-    .suggestions-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 280px);
-      column-gap: 56px;
-      row-gap: 24px;
-      width: fit-content;
-      margin: 0 auto;
-    }
-
-    .suggestion-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 4px 0;
-      position: relative;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    /* Vertical line marker on the left */
-    .suggestion-marker {
-      width: 1.5px;
-      height: 16px;
-      background: rgba(244, 63, 94, 0.7);
-      border-radius: 1px;
-      flex-shrink: 0;
-      margin-right: 2px;
-      transition: all 0.2s ease;
-    }
-
-    .suggestion-item:hover .suggestion-marker {
-      background: #f43f5e;
-      box-shadow: 0 0 8px rgba(244, 63, 94, 0.8);
-    }
-
-    .suggestion-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #f43f5e;
-      flex-shrink: 0;
-      transition: transform 0.2s ease;
-    }
-
-    .suggestion-item:hover .suggestion-icon {
-      transform: scale(1.1);
-    }
-
-    .suggestion-icon svg {
-      width: 17px;
-      height: 17px;
-    }
-
-    .suggestion-text {
-      font-size: 14px;
-      font-weight: 400;
-      color: #e2e8f0;
-      letter-spacing: -0.01em;
-      transition: color 0.2s ease, transform 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .suggestion-item:hover .suggestion-text {
-      color: #ffffff;
-      transform: translateX(2px);
-    }
-
     /* Responsive adjustments */
-    @media (max-width: 860px) {
-      .suggestions-grid {
-        grid-template-columns: 1fr;
-        column-gap: 20px;
-        row-gap: 18px;
-        width: 100%;
-        max-width: 360px;
-      }
-
-      .content-stage {
-        margin-top: 0;
-        padding-top: 40px;
-      }
-    }
-
     @media (max-width: 640px) {
       .sidebar-container {
         display: none;
@@ -1128,89 +1001,9 @@
         height: 54px;
         padding-left: 18px;
       }
-      .pill-group {
-        gap: 8px;
-      }
-      .filter-pill {
-        padding: 7px 16px;
-        font-size: 12.5px;
-      }
     }
 
-    /* Screen Transition Spinner Overlay (From Frame 8) */
-    .transition-spinner-overlay {
-      position: fixed;
-      inset: 0;
-      background: #070709;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.22s ease;
-    }
-
-    .transition-spinner-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .transition-checking-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #b0b0ba;
-      font-size: 13.5px;
-      font-weight: 400;
-      letter-spacing: 0.01em;
-    }
-
-    .transition-clock-icon {
-      width: 14px;
-      height: 14px;
-      stroke: #a1a1aa;
-      fill: none;
-      stroke-width: 1.9;
-    }
-
-    .clean-frame8-spinner {
-      position: relative;
-      width: 32px;
-      height: 32px;
-      animation: spinner-rotate 1s steps(12, end) infinite;
-    }
-
-    .clean-frame8-spinner .petal {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: 2.5px;
-      height: 8px;
-      margin-left: -1.25px;
-      background-color: #f43f5e;
-      border-radius: 9999px;
-      transform-origin: 50% 16px;
-    }
-
-    .clean-frame8-spinner .p-1  { transform: rotate(0deg);   opacity: 1; }
-    .clean-frame8-spinner .p-2  { transform: rotate(30deg);  opacity: 0.92; }
-    .clean-frame8-spinner .p-3  { transform: rotate(60deg);  opacity: 0.83; }
-    .clean-frame8-spinner .p-4  { transform: rotate(90deg);  opacity: 0.75; }
-    .clean-frame8-spinner .p-5  { transform: rotate(120deg); opacity: 0.66; }
-    .clean-frame8-spinner .p-6  { transform: rotate(150deg); opacity: 0.58; }
-    .clean-frame8-spinner .p-7  { transform: rotate(180deg); opacity: 0.5; }
-    .clean-frame8-spinner .p-8  { transform: rotate(210deg); opacity: 0.41; }
-    .clean-frame8-spinner .p-9  { transform: rotate(240deg); opacity: 0.33; }
-    .clean-frame8-spinner .p-10 { transform: rotate(270deg); opacity: 0.25; }
-    .clean-frame8-spinner .p-11 { transform: rotate(300deg); opacity: 0.16; }
-    .clean-frame8-spinner .p-12 { transform: rotate(330deg); opacity: 0.08; }
-
-    /* =========================================================
-       COMPREHENSIVE LIGHT THEME OVERRIDES
-       ========================================================= */
+    /* Light Mode Overrides */
     html[data-theme="light"] {
       color-scheme: light;
       --bg-canvas: #f8fafc;
@@ -1220,272 +1013,57 @@
       --search-bg: rgba(255, 255, 255, 0.95);
       --search-border: rgba(0, 0, 0, 0.12);
     }
-
     html[data-theme="light"] body {
       background-color: #f8fafc;
       color: #0f172a;
     }
-
-    /* Soft ambient background glows in light mode */
     html[data-theme="light"] .ambient-glow-left {
       background: radial-gradient(circle at center, rgba(244, 63, 94, 0.10) 0%, rgba(251, 146, 60, 0.05) 45%, rgba(248, 250, 252, 0) 75%);
       filter: blur(80px);
       opacity: 0.85;
     }
-
     html[data-theme="light"] .ambient-glow-right {
       background: radial-gradient(circle at center, rgba(168, 85, 247, 0.09) 0%, rgba(56, 189, 248, 0.05) 45%, rgba(248, 250, 252, 0) 75%);
       filter: blur(80px);
       opacity: 0.85;
     }
-
-    /* Sidebar in Light Mode */
     html[data-theme="light"] .sidebar-container {
       background: rgba(255, 255, 255, 0.88);
       border-right: 1px solid rgba(0, 0, 0, 0.08);
       box-shadow: 2px 0 24px rgba(0, 0, 0, 0.04);
     }
-
-    html[data-theme="light"] .rail-btn {
-      color: rgba(15, 23, 42, 0.65);
-    }
-
-    html[data-theme="light"] .rail-btn:hover {
-      color: #0f172a;
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    html[data-theme="light"] .rail-btn.active {
-      color: #0f172a;
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    html[data-theme="light"] .user-profile-btn {
-      background: rgba(244, 63, 94, 0.08);
-      border-color: rgba(244, 63, 94, 0.35);
-      color: #f43f5e;
-      box-shadow: 0 0 14px rgba(244, 63, 94, 0.12);
-    }
-
-    html[data-theme="light"] .sidebar-brand-text {
-      color: #0f172a;
-    }
-
-    html[data-theme="light"] .sidebar-toggle-btn {
-      color: rgba(15, 23, 42, 0.6);
-    }
-
-    html[data-theme="light"] .sidebar-toggle-btn:hover {
-      color: #0f172a;
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    html[data-theme="light"] .sidebar-tab {
-      color: #0f172a;
-      background: rgba(0, 0, 0, 0.04);
-      border-color: rgba(0, 0, 0, 0.08);
-    }
-
-    html[data-theme="light"] .search-chats-wrap svg {
-      color: rgba(15, 23, 42, 0.45);
-    }
-
-    html[data-theme="light"] .search-chats-input {
-      background: rgba(0, 0, 0, 0.04);
-      border-color: rgba(0, 0, 0, 0.08);
-      color: #0f172a;
-    }
-
-    html[data-theme="light"] .search-chats-input::placeholder {
-      color: rgba(15, 23, 42, 0.45);
-    }
-
-    html[data-theme="light"] .search-chats-input:focus {
-      border-color: rgba(244, 63, 94, 0.5);
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
-    }
-
-    html[data-theme="light"] .sidebar-section-title {
-      color: rgba(15, 23, 42, 0.45);
-    }
-
-    html[data-theme="light"] .chat-item {
-      color: #334155;
-    }
-
-    html[data-theme="light"] .chat-item:hover {
-      background: rgba(0, 0, 0, 0.05);
-      color: #0f172a;
-    }
-
-    html[data-theme="light"] .sidebar-bottom-profile {
-      background: rgba(255, 255, 255, 0.75);
-      border-top-color: rgba(0, 0, 0, 0.08);
-    }
-
-    html[data-theme="light"] .profile-name {
-      color: #0f172a;
-    }
-
-    html[data-theme="light"] .profile-options-btn {
-      color: rgba(15, 23, 42, 0.5);
-    }
-
-    html[data-theme="light"] .profile-options-btn:hover {
-      color: #0f172a;
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    /* Top Bar Header in Light Mode */
-    html[data-theme="light"] .brand-text {
-      color: #0f172a;
-    }
-
+    html[data-theme="light"] .rail-btn { color: rgba(15, 23, 42, 0.65); }
+    html[data-theme="light"] .rail-btn:hover { color: #0f172a; background: rgba(0, 0, 0, 0.06); }
+    html[data-theme="light"] .rail-btn.active { color: #0f172a; background: rgba(0, 0, 0, 0.06); }
+    html[data-theme="light"] .sidebar-brand-text { color: #0f172a; }
+    html[data-theme="light"] .brand-text { color: #0f172a; }
     html[data-theme="light"] .action-circle-btn {
       background: rgba(0, 0, 0, 0.04);
       border-color: rgba(0, 0, 0, 0.08);
       color: #334155;
     }
-
     html[data-theme="light"] .action-circle-btn:hover {
       background: rgba(0, 0, 0, 0.08);
-      border-color: rgba(0, 0, 0, 0.14);
       color: #0f172a;
     }
-
-    /* Center Hero Typography in Light Mode */
-    html[data-theme="light"] .hero-title {
-      color: #0f172a;
-    }
-
-    html[data-theme="light"] .hero-subtitle {
-      color: #475569;
-    }
-
-    /* Filter Pills in Light Mode */
-    html[data-theme="light"] .filter-pill {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      color: #1e293b;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-    }
-
-    html[data-theme="light"] .filter-pill .pill-mood-icon {
-      color: #f43f5e;
-    }
-
-    html[data-theme="light"] .filter-pill::before {
-      background: conic-gradient(
-        from var(--border-angle, 0deg) at 50% 50%,
-        #f97316 0deg,
-        #f43f5e 35deg,
-        #ec4899 70deg,
-        #8b5cf6 105deg,
-        #0ea5e9 140deg,
-        transparent 210deg
-      );
-      filter: blur(8px);
-    }
-
-    html[data-theme="light"] .filter-pill::after {
-      background: conic-gradient(
-        from var(--border-angle, 0deg) at 50% 50%,
-        #f97316 0deg,
-        #f43f5e 35deg,
-        #ec4899 70deg,
-        #8b5cf6 105deg,
-        #0ea5e9 140deg,
-        transparent 210deg
-      );
-    }
-
-    html[data-theme="light"] .filter-pill:hover {
-      color: #0f172a;
-      border-color: rgba(244, 63, 94, 0.5);
-      background: #ffffff;
-      box-shadow: 0 8px 24px rgba(244, 63, 94, 0.22), 0 2px 10px rgba(0, 0, 0, 0.06);
-    }
-
-    html[data-theme="light"] .filter-pill:hover .pill-mood-icon {
-      color: #f43f5e;
-      transform: scale(1.12);
-    }
-
-    /* Search Input Box in Light Mode */
+    html[data-theme="light"] .hero-title { color: #0f172a; }
+    html[data-theme="light"] .hero-description { color: #475569; }
+    html[data-theme="light"] .checking-label-row { color: #334155; }
+    html[data-theme="light"] .checking-text { color: #1e293b; font-weight: 500; }
+    html[data-theme="light"] .checking-clock-icon { stroke: #475569; }
     html[data-theme="light"] .search-box {
       background: rgba(255, 255, 255, 0.95);
       border-color: rgba(0, 0, 0, 0.12);
-      box-shadow: 
-        0 14px 34px -8px rgba(0, 0, 0, 0.10),
-        0 0 20px -4px rgba(244, 63, 94, 0.06),
-        inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.10);
     }
-
-    html[data-theme="light"] .search-box:focus-within {
-      border-color: rgba(244, 63, 94, 0.5);
-      box-shadow: 
-        0 20px 44px -8px rgba(0, 0, 0, 0.14),
-        0 0 24px rgba(244, 63, 94, 0.16);
-      background: #ffffff;
-    }
-
-    html[data-theme="light"] .search-icon-left {
-      color: rgba(15, 23, 42, 0.45);
-    }
-
-    html[data-theme="light"] .search-input-field {
-      color: #0f172a;
-    }
-
-    html[data-theme="light"] .search-input-field::placeholder {
-      color: rgba(15, 23, 42, 0.42);
-    }
-
-    html[data-theme="light"] .mic-action-btn {
-      color: rgba(15, 23, 42, 0.5);
-    }
-
-    html[data-theme="light"] .mic-action-btn:hover {
-      color: #0f172a;
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    /* Suggestions in Light Mode */
-    html[data-theme="light"] .suggestion-item {
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(0, 0, 0, 0.07);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
-    html[data-theme="light"] .suggestion-item:hover {
-      background: rgba(255, 255, 255, 0.98);
-      border-color: rgba(244, 63, 94, 0.35);
-      box-shadow: 0 6px 18px rgba(244, 63, 94, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
-    }
-
-    html[data-theme="light"] .suggestion-text {
-      color: #334155;
-    }
-
-    html[data-theme="light"] .suggestion-item:hover .suggestion-text {
-      color: #0f172a;
-    }
-
-    /* Tooltip & Transition Overlay in Light Mode */
-    html[data-theme="light"] [data-tooltip]::after {
-      background: rgba(15, 23, 42, 0.92);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    html[data-theme="light"] .transition-spinner-overlay {
-      background: rgba(248, 250, 252, 0.92);
-    }
-
-    html[data-theme="light"] .taste-checking-label {
-      color: #0f172a;
-    }
+    html[data-theme="light"] .search-input-field { color: #0f172a; }
+    html[data-theme="light"] .search-input-field::placeholder { color: rgba(15, 23, 42, 0.42); }
+    html[data-theme="light"] .search-icon-left { color: rgba(15, 23, 42, 0.45); }
+    html[data-theme="light"] .mic-action-btn { color: rgba(15, 23, 42, 0.5); }
+    html[data-theme="light"] .search-chats-input { background: rgba(0,0,0,0.04); color: #0f172a; }
+    html[data-theme="light"] .chat-item { color: #334155; }
+    html[data-theme="light"] .chat-item:hover { background: rgba(0,0,0,0.05); color: #0f172a; }
+    html[data-theme="light"] .profile-name { color: #0f172a; }
   </style>
 </head>
 <body>
@@ -1494,37 +1072,12 @@
   <div class="ambient-glow-left" aria-hidden="true"></div>
   <div class="ambient-glow-right" aria-hidden="true"></div>
 
-  <!-- Screen Transition Spinner Overlay (Frame 8 Spinner) -->
-  <div class="transition-spinner-overlay" id="pageTransitionOverlay">
-    <div class="transition-checking-label">
-      <svg class="transition-clock-icon" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10"></circle>
-        <polyline points="12 6 12 12 16 14"></polyline>
-      </svg>
-      <span>Checking your taste ..</span>
-    </div>
-    <div class="clean-frame8-spinner" aria-label="Loading">
-      <span class="petal p-1"></span>
-      <span class="petal p-2"></span>
-      <span class="petal p-3"></span>
-      <span class="petal p-4"></span>
-      <span class="petal p-5"></span>
-      <span class="petal p-6"></span>
-      <span class="petal p-7"></span>
-      <span class="petal p-8"></span>
-      <span class="petal p-9"></span>
-      <span class="petal p-10"></span>
-      <span class="petal p-11"></span>
-      <span class="petal p-12"></span>
-    </div>
-  </div>
-
   <div class="app-viewport">
     
     <!-- Collapsible / Expandable Sidebar Menu -->
     <aside class="sidebar-container" id="sidebar" aria-label="Sidebar navigation">
       
-      <!-- 1. Collapsed Rail View (Default Frame 6) -->
+      <!-- 1. Collapsed Rail View (Default Mode) -->
       <div class="sidebar-rail-view">
         <div class="rail-group">
           <!-- Toggle button to expand sidebar -->
@@ -1536,7 +1089,7 @@
           </button>
 
           <!-- New Chat / Note icon -->
-          <button class="rail-btn" id="railNewChatBtn" data-tooltip="New Search / Chat" aria-label="New Note">
+          <button class="rail-btn" id="railNewChatBtn" data-tooltip="New Search / Chat" aria-label="New Note" onclick="startNewChat()">
             <svg viewBox="0 0 24 24">
               <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
@@ -1544,12 +1097,12 @@
           </button>
 
           <!-- Search icon -->
-          <button class="rail-btn active" data-tooltip="Search" aria-label="Search">
+          <a href="index.html" class="rail-btn active" data-tooltip="Search" aria-label="Search">
             <svg viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="7.5"></circle>
               <line x1="21" x2="16.5" y1="21" y2="16.5"></line>
             </svg>
-          </button>
+          </a>
         </div>
 
         <!-- Bottom Profile Avatar -->
@@ -1563,7 +1116,7 @@
         </div>
       </div>
 
-      <!-- 2. Expanded Sidebar View (Frame 11 Content) -->
+      <!-- 2. Expanded Sidebar View (Chat Drawer) -->
       <div class="sidebar-expanded-view">
         <!-- Top Brand and Collapse -->
         <div class="sidebar-top">
@@ -1627,25 +1180,19 @@
           <div>
             <div class="sidebar-section-title">Recents</div>
             <div class="chat-list" id="recentsList">
-              <div class="chat-item" onclick="searchWithTransition('Best ramen near me')">
-                <svg viewBox="0 0 24 24">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <span>Best ramen near me</span>
-              </div>
-              <div class="chat-item" onclick="searchWithTransition('Date places in New york')">
+              <div class="chat-item" onclick="setQuery('Date places in New york')">
                 <svg viewBox="0 0 24 24">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 <span>Date places in New york</span>
               </div>
-              <div class="chat-item" onclick="searchWithTransition('Dinner places near me')">
+              <div class="chat-item" onclick="setQuery('Dinner places near me')">
                 <svg viewBox="0 0 24 24">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 <span>Dinner places near me</span>
               </div>
-              <div class="chat-item" onclick="searchWithTransition('Restaurant options in Chicago')">
+              <div class="chat-item" onclick="setQuery('Restaurant options in Chicago')">
                 <svg viewBox="0 0 24 24">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
@@ -1706,7 +1253,7 @@
             </svg>
           </button>
 
-          <!-- Mood / Star-Struck Emoji button (star-struck_1f929 from Figma) -->
+          <!-- Mood / Star-Struck Emoji button (matching Figma) -->
           <button class="action-circle-btn" data-tooltip="Mood & Vibe" aria-label="Mood & Vibe">
             <span class="emoji-icon">🤩</span>
           </button>
@@ -1724,39 +1271,45 @@
         </div>
       </header>
 
-      <!-- Center Hero & Search Experience -->
+      <!-- Center Hero & Checking Taste Spinner Experience -->
       <section class="content-stage">
         
-        <!-- Hero Title -->
-        <h1 class="hero-title">
-          Search the world, <span class="accent-rose">your</span> way.
-        </h1>
+        <div class="stage-spacer-top"></div>
 
-        <!-- Hero Subtitle -->
-        <p class="hero-subtitle">
-          Search places, people, posts, trusted recommendations, or simply ask <span class="rexy-highlight">Rexy</span>.
-        </p>
-
-        <!-- Prompt Filter Pills -->
-        <div class="pill-group" role="group" aria-label="Quick search modes">
-          <a href="Frame 7.html" onclick="event.preventDefault(); transitionTo('Frame 7.html');" class="filter-pill" style="text-decoration: none;" aria-label="I'm bored - Activity suggestions">
-            <svg class="pill-mood-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="9"></circle>
-              <line x1="9" y1="10" x2="9.01" y2="10"></line>
-              <line x1="15" y1="10" x2="15.01" y2="10"></line>
-              <path d="M15 16c-.5-1-1.7-1.5-3-1.5s-2.5.5-3 1.5"></path>
+        <!-- Center Checking Taste and Spinner -->
+        <div class="checking-taste-container" id="checkingContainer">
+          
+          <div class="checking-label-row">
+            <svg class="checking-clock-icon" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-            <span class="pill-text">I'm bored</span>
-          </a>
-          <button class="filter-pill" onclick="searchWithTransition('Curate places good for me based on my taste')">
-            <span class="pill-text">Good for me?</span>
-          </button>
-          <button class="filter-pill" onclick="searchWithTransition('Plan my day in the city with top recommendations')">
-            <span class="pill-text">Plan my day</span>
-          </button>
+            <span class="checking-text" id="checkingLabel">Checking your taste ..</span>
+          </div>
+
+          <!-- Figma Frame 8 Pink Radial Spinner -->
+          <div class="taste-spinner-wrapper">
+            <div class="taste-spinner" aria-label="Checking your taste">
+              <span class="spinner-petal petal-1"></span>
+              <span class="spinner-petal petal-2"></span>
+              <span class="spinner-petal petal-3"></span>
+              <span class="spinner-petal petal-4"></span>
+              <span class="spinner-petal petal-5"></span>
+              <span class="spinner-petal petal-6"></span>
+              <span class="spinner-petal petal-7"></span>
+              <span class="spinner-petal petal-8"></span>
+              <span class="spinner-petal petal-9"></span>
+              <span class="spinner-petal petal-10"></span>
+              <span class="spinner-petal petal-11"></span>
+              <span class="spinner-petal petal-12"></span>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Search Input Bar -->
+        <div class="stage-spacer-bottom"></div>
+
+        <!-- Search Input Bar (Bottom) -->
         <div class="search-box-wrapper">
           <form class="search-box" id="searchForm" onsubmit="handleSearch(event)">
             <div class="search-icon-left" aria-hidden="true">
@@ -1799,86 +1352,6 @@
           </form>
         </div>
 
-        <!-- Suggestions Grid (2 columns x 3 rows) -->
-        <div class="suggestions-grid" role="list">
-          
-          <!-- Column 1, Item 1 -->
-          <div class="suggestion-item" role="listitem" onclick="setQuery('Coffee near galleries')">
-            <span class="suggestion-marker" aria-hidden="true"></span>
-            <span class="suggestion-icon" aria-hidden="true">
-              <!-- Dual Sparkle Stars SVG matching Figma -->
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.5 2C9.5 6.142 6.142 9.5 2 9.5C6.142 9.5 9.5 12.858 9.5 17C9.5 12.858 12.858 9.5 17 9.5C12.858 9.5 9.5 6.142 9.5 2Z"></path>
-                <path d="M18.5 14C18.5 16.485 16.485 18.5 14 18.5C16.485 18.5 18.5 20.515 18.5 23C18.5 20.515 20.515 18.5 23 18.5C20.515 18.5 18.5 16.485 18.5 14Z" opacity="0.85"></path>
-              </svg>
-            </span>
-            <span class="suggestion-text">Coffee near galleries</span>
-          </div>
-
-          <!-- Column 2, Item 1 -->
-          <div class="suggestion-item" role="listitem" onclick="setQuery('Dinner worth the detour')">
-            <span class="suggestion-marker" aria-hidden="true"></span>
-            <span class="suggestion-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.5 2C9.5 6.142 6.142 9.5 2 9.5C6.142 9.5 9.5 12.858 9.5 17C9.5 12.858 12.858 9.5 17 9.5C12.858 9.5 9.5 6.142 9.5 2Z"></path>
-                <path d="M18.5 14C18.5 16.485 16.485 18.5 14 18.5C16.485 18.5 18.5 20.515 18.5 23C18.5 20.515 20.515 18.5 23 18.5C20.515 18.5 18.5 16.485 18.5 14Z" opacity="0.85"></path>
-              </svg>
-            </span>
-            <span class="suggestion-text">Dinner worth the detour</span>
-          </div>
-
-          <!-- Column 1, Item 2 -->
-          <div class="suggestion-item" role="listitem" onclick="setQuery('Tonight\'s watchlist')">
-            <span class="suggestion-marker" aria-hidden="true"></span>
-            <span class="suggestion-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.5 2C9.5 6.142 6.142 9.5 2 9.5C6.142 9.5 9.5 12.858 9.5 17C9.5 12.858 12.858 9.5 17 9.5C12.858 9.5 9.5 6.142 9.5 2Z"></path>
-                <path d="M18.5 14C18.5 16.485 16.485 18.5 14 18.5C16.485 18.5 18.5 20.515 18.5 23C18.5 20.515 20.515 18.5 23 18.5C20.515 18.5 18.5 16.485 18.5 14Z" opacity="0.85"></path>
-              </svg>
-            </span>
-            <span class="suggestion-text">Tonight's watchlist</span>
-          </div>
-
-          <!-- Column 2, Item 2 -->
-          <div class="suggestion-item" role="listitem" onclick="setQuery('Best bakery in town?')">
-            <span class="suggestion-marker" aria-hidden="true"></span>
-            <span class="suggestion-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.5 2C9.5 6.142 6.142 9.5 2 9.5C6.142 9.5 9.5 12.858 9.5 17C9.5 12.858 12.858 9.5 17 9.5C12.858 9.5 9.5 6.142 9.5 2Z"></path>
-                <path d="M18.5 14C18.5 16.485 16.485 18.5 14 18.5C16.485 18.5 18.5 20.515 18.5 23C18.5 20.515 20.515 18.5 23 18.5C20.515 18.5 18.5 16.485 18.5 14Z" opacity="0.85"></path>
-              </svg>
-            </span>
-            <span class="suggestion-text">Best bakery in town?</span>
-          </div>
-
-          <!-- Column 1, Item 3 -->
-          <div class="suggestion-item" role="listitem" onclick="setQuery('New shows this month')">
-            <span class="suggestion-marker" aria-hidden="true"></span>
-            <span class="suggestion-icon" aria-hidden="true">
-              <!-- Trending Up Arrow SVG matching Figma -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                <polyline points="17 6 23 6 23 12"></polyline>
-              </svg>
-            </span>
-            <span class="suggestion-text">New shows this month</span>
-          </div>
-
-          <!-- Column 2, Item 3 -->
-          <div class="suggestion-item" role="listitem" onclick="setQuery('Date night spots')">
-            <span class="suggestion-marker" aria-hidden="true"></span>
-            <span class="suggestion-icon" aria-hidden="true">
-              <!-- Trending Up Arrow SVG matching Figma -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                <polyline points="17 6 23 6 23 12"></polyline>
-              </svg>
-            </span>
-            <span class="suggestion-text">Date night spots</span>
-          </div>
-
-        </div>
-
       </section>
 
     </main>
@@ -1886,153 +1359,27 @@
   </div>
 
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const sidebarExpandBtn = document.getElementById('sidebarExpandBtn');
-    const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
-    const railNewChatBtn = document.getElementById('railNewChatBtn');
-    const railProfileBtn = document.getElementById('railProfileBtn');
-    const searchInput = document.getElementById('searchInput');
-    const voiceWaveBtn = document.getElementById('voiceWaveBtn');
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-
-    // Toggle Sidebar Expand / Collapse
-    function setSidebarExpanded(isExp) {
-      if (isExp) {
-        sidebar.classList.add('expanded');
-        document.body.classList.add('sidebar-is-expanded');
-      } else {
-        sidebar.classList.remove('expanded');
-        document.body.classList.remove('sidebar-is-expanded');
-      }
-    }
-
-    if (sidebarExpandBtn) {
-      sidebarExpandBtn.addEventListener('click', () => setSidebarExpanded(true));
-    }
-    if (sidebarCollapseBtn) {
-      sidebarCollapseBtn.addEventListener('click', () => setSidebarExpanded(false));
-    }
-    if (railNewChatBtn) {
-      railNewChatBtn.addEventListener('click', () => {
-        setSidebarExpanded(true);
-        startNewChat();
-      });
-    }
-    if (railProfileBtn) {
-      railProfileBtn.addEventListener('click', () => {
-        setSidebarExpanded(true);
-      });
-    }
-
-    // Screen transition with Frame 8 spinner
-    function transitionTo(url) {
-      const overlay = document.getElementById('pageTransitionOverlay');
-      if (overlay) {
-        overlay.classList.add('active');
-        setTimeout(() => {
-          window.location.href = url;
-        }, 650);
-      } else {
-        window.location.href = url;
-      }
-    }
-
-    function searchWithTransition(query) {
-      if (searchInput) searchInput.value = query;
-      transitionTo(`Frame 9.html?q=${encodeURIComponent(query)}`);
-    }
-
-    // Populate search input with click
-    function setQuery(text) {
-      searchInput.value = text;
-      searchInput.focus();
-    }
-
-    // Submit handler
-    function handleSearch(e) {
-      e.preventDefault();
-      const val = searchInput.value.trim();
-      if (val) {
-        transitionTo(`Frame 9.html?q=${encodeURIComponent(val)}`);
-      }
-    }
-
-    // New chat action
-    function startNewChat() {
-      searchInput.value = '';
-      searchInput.placeholder = 'Search places, people, or ask Rexy...';
-      searchInput.focus();
-    }
-
-    // Filter chat list
-    function filterChats(query) {
-      const q = query.toLowerCase();
-      document.querySelectorAll('.chat-item').forEach(item => {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(q) ? 'flex' : 'none';
-      });
-    }
-
-    // Voice assistant button toggle simulation
-    if (voiceWaveBtn) {
-      voiceWaveBtn.addEventListener('click', () => {
-        voiceWaveBtn.classList.toggle('listening');
-        if (voiceWaveBtn.classList.contains('listening')) {
-          searchInput.placeholder = "Listening with Rexy voice...";
-        } else {
-          searchInput.placeholder = "Search places, people, or ask Rexy...";
-        }
-      });
-    }
-
-    // Orbiting Spectral Angle Tracking on Filter Pills (exact match from index.backup.html)
-    document.querySelectorAll('.filter-pill').forEach(pill => {
-      const updateMouseTrack = (e) => {
-        const rect = pill.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const cx = rect.width / 2;
-        const cy = rect.height / 2;
-        const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI) - 90;
-
-        pill.style.setProperty('--mouse-x', `${x.toFixed(1)}px`);
-        pill.style.setProperty('--mouse-y', `${y.toFixed(1)}px`);
-        pill.style.setProperty('--border-angle', `${angle.toFixed(1)}deg`);
-      };
-
-      pill.addEventListener('mousemove', updateMouseTrack);
-      document.addEventListener('mousemove', (e) => {
-        const rect = pill.getBoundingClientRect();
-        if (
-          e.clientX >= rect.left - 50 &&
-          e.clientX <= rect.right + 50 &&
-          e.clientY >= rect.top - 50 &&
-          e.clientY <= rect.bottom + 50
-        ) {
-          updateMouseTrack(e);
-        }
-      });
-    });
-
-    // Light/Dark mode switcher with localStorage persistence and icon update
+    // Theme Switcher
     const htmlEl = document.documentElement;
+    const themeBtn = document.getElementById('themeToggleBtn');
+
     function updateThemeIcon(theme) {
-      if (!themeToggleBtn) return;
+      if (!themeBtn) return;
       if (theme === 'light') {
-        themeToggleBtn.innerHTML = `
+        themeBtn.innerHTML = `
           <svg viewBox="0 0 24 24" width="19" height="19" stroke="currentColor" fill="none" stroke-width="1.8">
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
           </svg>
         `;
-        themeToggleBtn.setAttribute('data-tooltip', 'Dark mode');
+        themeBtn.setAttribute('data-tooltip', 'Dark mode');
       } else {
-        themeToggleBtn.innerHTML = `
+        themeBtn.innerHTML = `
           <svg viewBox="0 0 24 24" width="19" height="19" stroke="currentColor" fill="none" stroke-width="1.8">
             <circle cx="12" cy="12" r="4"></circle>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
           </svg>
         `;
-        themeToggleBtn.setAttribute('data-tooltip', 'Light mode');
+        themeBtn.setAttribute('data-tooltip', 'Light mode');
       }
     }
 
@@ -2042,16 +1389,117 @@
       updateThemeIcon(saved);
     }
 
-    if (themeToggleBtn) {
-      themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = htmlEl.getAttribute('data-theme') || 'dark';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        htmlEl.setAttribute('data-theme', newTheme);
-        localStorage.setItem('recz-theme', newTheme);
-        updateThemeIcon(newTheme);
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const current = htmlEl.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        localStorage.setItem('recz-theme', next);
+        updateThemeIcon(next);
       });
     }
     initTheme();
+
+    // Collapsible / Expandable Sidebar Logic
+    const sidebar = document.getElementById('sidebar');
+    const sidebarExpandBtn = document.getElementById('sidebarExpandBtn');
+    const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+    const railProfileBtn = document.getElementById('railProfileBtn');
+
+    function setSidebarExpanded(isExpanded) {
+      if (isExpanded) {
+        sidebar.classList.add('expanded');
+        document.body.classList.add('sidebar-is-expanded');
+      } else {
+        sidebar.classList.remove('expanded');
+        document.body.classList.remove('sidebar-is-expanded');
+      }
+      localStorage.setItem('recz-sidebar-expanded', isExpanded ? 'true' : 'false');
+    }
+
+    if (sidebarExpandBtn) {
+      sidebarExpandBtn.addEventListener('click', () => setSidebarExpanded(true));
+    }
+
+    if (sidebarCollapseBtn) {
+      sidebarCollapseBtn.addEventListener('click', () => setSidebarExpanded(false));
+    }
+
+    if (railProfileBtn) {
+      railProfileBtn.addEventListener('click', () => setSidebarExpanded(true));
+    }
+
+    // Restore sidebar state
+    const savedSidebarState = localStorage.getItem('recz-sidebar-expanded');
+    if (savedSidebarState === 'true') {
+      setSidebarExpanded(true);
+    }
+
+    // URL parameters handling
+    const urlParams = new URLSearchParams(window.location.search);
+    const vibeQuery = urlParams.get('vibe') || urlParams.get('q');
+    const searchInput = document.getElementById('searchInput');
+    if (vibeQuery && searchInput) {
+      searchInput.value = vibeQuery;
+    }
+
+    // Auto-transition simulation to Frame 9 after taste checking
+    const autoRedirect = urlParams.get('autoRedirect') !== 'false';
+    if (autoRedirect) {
+      setTimeout(() => {
+        window.location.href = `Frame 9.html?q=${encodeURIComponent(vibeQuery || 'Best ramen near me')}`;
+      }, 2400);
+    }
+
+    // Form search handler
+    function handleSearch(e) {
+      e.preventDefault();
+      const input = document.getElementById('searchInput');
+      const val = input ? input.value.trim() : '';
+      if (val) {
+        window.location.href = `Frame 9.html?q=${encodeURIComponent(val)}`;
+      }
+    }
+
+    // Filter chats in sidebar
+    function filterChats(query) {
+      const q = query.toLowerCase().trim();
+      const items = document.querySelectorAll('.chat-item');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // New chat action
+    function startNewChat() {
+      const input = document.getElementById('searchInput');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      const chatInput = document.getElementById('searchChatsInput');
+      if (chatInput) chatInput.value = '';
+      filterChats('');
+    }
+
+    // Voice Waveform Interaction
+    const voiceBtn = document.getElementById('voiceWaveBtn');
+    if (voiceBtn) {
+      voiceBtn.addEventListener('click', () => {
+        voiceBtn.classList.toggle('listening');
+      });
+    }
+
+    const micBtn = document.getElementById('micBtn');
+    if (micBtn) {
+      micBtn.addEventListener('click', () => {
+        if (voiceBtn) {
+          voiceBtn.classList.add('listening');
+          setTimeout(() => voiceBtn.classList.remove('listening'), 3000);
+        }
+      });
+    }
   </script>
 </body>
 </html>
